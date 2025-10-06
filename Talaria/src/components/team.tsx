@@ -5,7 +5,7 @@ const members = [
     {
         name: 'Meet Bhatt',
         role: 'Lead Developer - Project Manager',
-        avatar: '/images/team/meet.jpg',
+        avatar: '/images/team/Meet_Profile_Beach.png',
         link: '#',
     },
     {
@@ -31,7 +31,7 @@ export default function TeamSection() {
                     {members.map((member, index) => (
                         <div key={index} className="group overflow-hidden">
                             <Image 
-                                className="h-96 w-full rounded-md object-cover object-top grayscale transition-all duration-500 hover:grayscale-0 group-hover:h-[22.5rem] group-hover:rounded-xl" 
+                                className="h-[50rem] w-full rounded-md object-cover object-top grayscale transition-all duration-500 hover:grayscale-0 group-hover:h-[53rem] group-hover:rounded-xl" 
                                 src={member.avatar} 
                                 alt={`${member.name} - ${member.role}`} 
                                 width={826} 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Info, Users, LayoutDashboard, ArrowLeft } from "lucide-react";
+import { Info, Users, LayoutDashboard, ArrowLeft, Home, Image as ImageIcon, Brain } from "lucide-react";
 import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,13 @@ export default function TeamPage() {
   const router = useRouter();
 
   const dockItems = [
+    {
+      icon: Home,
+      label: "Home",
+      onClick: () => {
+        router.push("/");
+      },
+    },
     {
       icon: Info,
       label: "About",
@@ -23,6 +30,20 @@ export default function TeamPage() {
       label: "Team",
       onClick: () => {
         router.push("/team");
+      },
+    },
+    {
+      icon: ImageIcon,
+      label: "Gallery",
+      onClick: () => {
+        router.push("/gallery");
+      },
+    },
+    {
+      icon: Brain,
+      label: "ML Models",
+      onClick: () => {
+        router.push("/ml-models");
       },
     },
     {

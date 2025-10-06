@@ -271,8 +271,22 @@ interface DitheringShaderProps {
 }
 
 function hexToRgba(hex: string): [number, number, number, number] {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  if (!result) return [0, 0, 0, 1]
+  // Remove # if present
+  hex = hex.replace(/^#/, '');
+  
+  // Handle 8-character hex (with alpha)
+  if (hex.length === 8) {
+    return [
+      Number.parseInt(hex.slice(0, 2), 16) / 255,
+      Number.parseInt(hex.slice(2, 4), 16) / 255,
+      Number.parseInt(hex.slice(4, 6), 16) / 255,
+      Number.parseInt(hex.slice(6, 8), 16) / 255,
+    ];
+  }
+  
+  // Handle 6-character hex (without alpha)
+  const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return [0, 0, 0, 1];
 
   return [
     Number.parseInt(result[1], 16) / 255,
