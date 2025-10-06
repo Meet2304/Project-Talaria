@@ -1,5 +1,5 @@
 import * as React from "react"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { LucideIcon } from "lucide-react"
 
@@ -19,17 +19,18 @@ interface DockIconButtonProps {
   className?: string
 }
 
-const floatingAnimation = {
+const floatingAnimation: Variants = {
   initial: { y: 0 },
   animate: {
-    y: [-2, 2, -2],
+    y: [0, -10, 0],
     transition: {
-      duration: 4,
+      duration: 2,
       repeat: Infinity,
-      ease: "easeInOut" as const
+      ease: "easeInOut"
     }
   }
 }
+
 
 const DockIconButton = React.forwardRef<HTMLButtonElement, DockIconButtonProps>(
   ({ icon: Icon, label, onClick, className }, ref) => {
