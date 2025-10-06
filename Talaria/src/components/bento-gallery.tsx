@@ -207,32 +207,33 @@ const ImageModal = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
-        className="relative w-full max-w-4xl p-4"
+        className="relative w-full max-w-4xl"
         onClick={(e) => e.stopPropagation()}
       >
         <img
           src={item.url}
           alt={item.title}
-          className="h-auto max-h-[90vh] w-full object-contain"
+          className="h-auto max-h-[70vh] sm:max-h-[80vh] md:max-h-[90vh] w-full object-contain rounded-lg"
         />
-        <div className="mt-4 text-center">
-          <h3 className="text-xl font-bold text-white">{item.title}</h3>
-          <p className="mt-2 text-sm text-white/80">{item.desc}</p>
+        <div className="mt-3 sm:mt-4 text-center px-2">
+          <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">{item.title}</h3>
+          <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-white/80">{item.desc}</p>
         </div>
       </motion.div>
       <button
         onClick={onClose}
-        className="absolute right-4 top-4 text-white/80 transition-colors hover:text-white"
+        className="absolute right-2 sm:right-4 top-2 sm:top-4 text-white/80 transition-colors hover:text-white"
         aria-label="Close image view"
       >
-        <X size={32} strokeWidth={2} />
+        <X size={24} className="sm:hidden" strokeWidth={2} />
+        <X size={32} className="hidden sm:block" strokeWidth={2} />
       </button>
     </motion.div>
   )
@@ -248,20 +249,20 @@ const ImageRowWithHeader = ({
   row: GalleryRow
   onImageClick: (_item: ImageItem) => void
 }) => (
-  <div className="mb-12 relative">
+  <div className="mb-8 sm:mb-12 relative">
     {/* Row Header */}
-    <div className="mb-4 px-4">
-      <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+    <div className="mb-4 px-4 sm:px-6 lg:px-8">
+      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 mb-2">
         {row.heading}
       </h3>
-      <p className="text-base text-slate-600 max-w-3xl">
+      <p className="text-sm sm:text-base text-slate-600 max-w-3xl">
         {row.description}
       </p>
     </div>
     
     {/* Row Images */}
     <div 
-      className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 relative"
+      className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 scrollbar-hide px-4 sm:px-6 lg:px-8 relative"
       style={{ 
         scrollbarWidth: 'none', 
         msOverflowStyle: 'none',
@@ -279,7 +280,7 @@ const ImageRowWithHeader = ({
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
-          className={`group relative flex-shrink-0 ${getWidthClass(item.width)} h-[300px] cursor-pointer overflow-hidden border bg-card shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg`}
+          className={`group relative flex-shrink-0 ${getWidthClass(item.width)} h-[200px] sm:h-[250px] md:h-[300px] cursor-pointer overflow-hidden border bg-card shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg`}
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           onClick={() => onImageClick(item)}
@@ -294,10 +295,10 @@ const ImageRowWithHeader = ({
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <div className="relative z-10 p-4 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex items-end h-full">
+          <div className="relative z-10 p-3 sm:p-4 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex items-end h-full">
             <div>
-              <h3 className="text-lg font-bold text-white">{item.title}</h3>
-              <p className="mt-1 text-sm text-white/80">{item.desc}</p>
+              <h3 className="text-sm sm:text-base md:text-lg font-bold text-white">{item.title}</h3>
+              <p className="mt-1 text-xs sm:text-sm text-white/80">{item.desc}</p>
             </div>
           </div>
         </motion.div>

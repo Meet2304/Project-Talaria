@@ -7,6 +7,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Talaria - Cardiovascular & Gait Analysis",
   description: "Integrated footwear system for concurrent cardiovascular and gait analysis",
+  icons: {
+    icon: '/images/Assets/favicon.ico',
+    shortcut: '/images/Assets/favicon.ico',
+    apple: '/images/Assets/Talaria_Logo_TR.png',
+  },
 };
 
 export default function RootLayout({

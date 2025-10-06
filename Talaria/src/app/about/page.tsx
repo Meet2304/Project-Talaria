@@ -67,37 +67,37 @@ export default function AboutPage() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative z-10">
         {/* Back Button */}
         <Button
           variant="ghost"
           onClick={() => router.push("/")}
-          className="mb-8 hover:bg-white/80"
+          className="mb-6 sm:mb-8 hover:bg-white/80 text-sm sm:text-base"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Home
         </Button>
 
         {/* Page Title */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-4">
             About Talaria
           </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto px-4">
             Integrated Footwear System for Concurrent Cardiovascular and Gait Analysis
           </p>
         </div>
 
         {/* Mythology Origin Story */}
-        <FeatureCard className="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 mb-12">
-          <CardContent className="p-8 md:p-12">
-            <div className="max-w-4xl mx-auto space-y-8">
-              <div className="text-center mb-8">
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+        <FeatureCard className="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 mb-8 sm:mb-12">
+          <CardContent className="p-6 sm:p-8 md:p-12">
+            <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+              <div className="text-center mb-6 sm:mb-8">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
                   The Legend of Talaria
                 </h2>
-                <div className="w-32 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-slate-600 mx-auto rounded-full"></div>
-                <p className="text-slate-600 mt-4 italic">Where Ancient Mythology Meets Modern Innovation</p>
+                <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-slate-600 mx-auto rounded-full"></div>
+                <p className="text-slate-600 mt-4 italic text-sm sm:text-base">Where Ancient Mythology Meets Modern Innovation</p>
               </div>
               
               <div className="bg-white/60 backdrop-blur-sm p-6 border-l-4 border-blue-500">

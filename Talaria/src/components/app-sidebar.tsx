@@ -1,11 +1,11 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import {
   ArrowUpCircleIcon,
   BarChartIcon,
   DatabaseIcon,
-  Heart,
   SettingsIcon,
 } from "lucide-react"
 
@@ -55,11 +55,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:!p-2"
             >
-              <a href="/dashboard">
-                <Heart className="h-5 w-5 text-red-600" />
-                <span className="text-base font-semibold">Talaria</span>
+              <a href="/dashboard" className="flex items-center gap-1 bg-slate-900 hover:bg-slate-800 rounded-md px-3 py-2">
+                <div className="relative w-14 h-14">
+                  <Image 
+                    src="/images/Assets/Talaria_Logo_TR.png" 
+                    alt="Talaria Logo" 
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <span className="text-lg font-semibold text-white">TALARIA</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -80,11 +80,11 @@ export default function AnalyticsPage() {
             <div className="@container/main flex flex-1 flex-col gap-2">
               <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                 {/* Page Header */}
-                <div className="px-4 lg:px-6">
+                <div className="px-4 sm:px-6">
                   <Card>
-                    <CardHeader>
-                      <CardTitle className="text-2xl">Analytics Dashboard</CardTitle>
-                      <CardDescription>
+                    <CardHeader className="p-4 sm:p-6">
+                      <CardTitle className="text-xl sm:text-2xl">Analytics Dashboard</CardTitle>
+                      <CardDescription className="text-sm sm:text-base">
                         Comprehensive analysis of your health and activity data
                       </CardDescription>
                     </CardHeader>
@@ -95,7 +95,7 @@ export default function AnalyticsPage() {
                 <SectionCards />
 
                 {/* Charts Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 lg:px-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 sm:px-6">
                   {/* Primary Chart */}
                   <div className="lg:col-span-2">
                     <ChartAreaInteractive />
@@ -104,34 +104,34 @@ export default function AnalyticsPage() {
                   {/* ML Models Section */}
                   <div className="lg:col-span-2">
                     <Card>
-                      <CardHeader>
-                        <CardTitle className="text-xl">ML Model Performance</CardTitle>
-                        <CardDescription>Real-time status and metrics of deployed models</CardDescription>
+                      <CardHeader className="p-4 sm:p-6">
+                        <CardTitle className="text-lg sm:text-xl">ML Model Performance</CardTitle>
+                        <CardDescription className="text-sm">Real-time status and metrics of deployed models</CardDescription>
                       </CardHeader>
-                      <CardContent>
-                        <div className="grid md:grid-cols-2 gap-4">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                           {ML_MODELS.map((model) => {
                             const Icon = model.icon;
                             const colors = getColorClasses(model.color);
                             
                             return (
-                              <div key={model.id} className="border border-slate-200 p-4 hover:border-slate-300 transition-colors">
+                              <div key={model.id} className="border border-slate-200 p-3 sm:p-4 hover:border-slate-300 transition-colors">
                                 {/* Model Header */}
-                                <div className="flex items-center gap-3 mb-4">
-                                  <div className={`p-2 ${colors.bg} border ${colors.border}`}>
-                                    <Icon className={`w-5 h-5 ${colors.icon}`} />
+                                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                                  <div className={`p-1.5 sm:p-2 ${colors.bg} border ${colors.border}`}>
+                                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${colors.icon}`} />
                                   </div>
-                                  <div className="flex-1">
+                                  <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2">
-                                      <h3 className="font-semibold text-slate-900 text-sm">{model.name}</h3>
+                                      <h3 className="font-semibold text-slate-900 text-xs sm:text-sm truncate">{model.name}</h3>
                                       <Badge 
                                         variant={model.status === "connected" ? "default" : "secondary"}
-                                        className="text-xs h-5"
+                                        className="text-xs h-5 flex-shrink-0"
                                       >
                                         {model.status === "connected" ? "Active" : "Inactive"}
                                       </Badge>
                                     </div>
-                                    <p className="text-xs text-slate-500">{model.type}</p>
+                                    <p className="text-xs text-slate-500 truncate">{model.type}</p>
                                   </div>
                                 </div>
 

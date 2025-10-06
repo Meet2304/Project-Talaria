@@ -66,12 +66,12 @@ export default function TeamPage() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
         {/* Back Button */}
         <Button
           variant="ghost"
           onClick={() => router.push("/")}
-          className="mb-8 hover:bg-white/80"
+          className="mb-6 sm:mb-8 hover:bg-white/80 text-sm sm:text-base"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Home
@@ -79,7 +79,7 @@ export default function TeamPage() {
 
         {/* Page Title */}
         <div className="text-center mb-0">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-0">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-0">
             Our Team
           </h1>
           {/* <p className="text-xl text-slate-600 max-w-3xl mx-auto">

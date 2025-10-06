@@ -56,40 +56,39 @@ export default function MLModelsPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-24 text-center relative z-10">
-        <div className="max-w-3xl mx-auto space-y-6">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 text-center relative z-10">
+        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
           <h1 
-            className="font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent"
-            style={{ fontSize: 'clamp(2.5rem, 10vw, 6rem)' }}
+            className="font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent text-3xl sm:text-5xl md:text-6xl"
           >
             ML Models
           </h1>
-          <p className="text-base text-slate-600 max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto px-4">
             AI-powered models for health monitoring and analysis
           </p>
         </div>
       </section>
 
       {/* Models Grid - Side by Side */}
-      <section className="container mx-auto px-4 py-8 relative z-10 max-w-7xl">
-        <div className="grid md:grid-cols-2 gap-6 mb-16">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 max-w-7xl">
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-16">
           {ML_MODELS.map((model) => {
             const Icon = model.icon;
             const colors = getColorClasses(model.color);
             
             return (
-              <div key={model.id} className="bg-white border border-slate-200 p-6 hover:shadow-lg transition-shadow">
+              <div key={model.id} className="bg-white border border-slate-200 p-4 sm:p-6 hover:shadow-lg transition-shadow">
                 {/* Header */}
-                <div className="flex items-start gap-4 mb-6">
-                  <div className={`p-3 ${colors.bg} border ${colors.border}`}>
-                    <Icon className={`w-6 h-6 ${colors.icon}`} />
+                <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+                  <div className={`p-2 sm:p-3 ${colors.bg} border ${colors.border} flex-shrink-0`}>
+                    <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${colors.icon}`} />
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h2 className="text-xl font-bold text-slate-900">{model.name}</h2>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <h2 className="text-lg sm:text-xl font-bold text-slate-900">{model.name}</h2>
                       <Badge 
                         variant={model.status === "connected" ? "default" : "secondary"}
-                        className="text-xs"
+                        className="text-xs flex-shrink-0"
                       >
                         {model.status === "connected" ? "Connected" : "Not Connected"}
                       </Badge>
