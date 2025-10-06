@@ -143,7 +143,7 @@ export default function PredictionsPage() {
                       <div className="space-y-4">
                         <div className="text-3xl font-bold">8,500 Steps</div>
                         <div className="text-sm text-muted-foreground">
-                          You're on track to meet your daily goal
+                          You&apos;re on track to meet your daily goal
                         </div>
                       </div>
                     </CardContent>
