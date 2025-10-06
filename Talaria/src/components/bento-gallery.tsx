@@ -3,8 +3,6 @@
 import React, { useRef, useState } from "react"
 import {
   motion,
-  useScroll,
-  useTransform,
   AnimatePresence,
 } from "framer-motion"
 import { X } from "lucide-react"
@@ -248,7 +246,7 @@ const ImageRowWithHeader = ({
   onImageClick 
 }: { 
   row: GalleryRow
-  onImageClick: (item: ImageItem) => void
+  onImageClick: (_item: ImageItem) => void
 }) => (
   <div className="mb-12 relative">
     {/* Row Header */}

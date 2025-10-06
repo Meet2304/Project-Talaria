@@ -29,10 +29,10 @@ export function FirebaseDebug() {
 
         setConfigStatus(config);
 
-        console.log("🔥 Firebase Configuration Check:");
-        console.log("API Key:", config.apiKey ? "✓ Set" : "✗ MISSING");
-        console.log("Database URL:", config.databaseURL ? `✓ ${config.databaseURL}` : "✗ MISSING");
-        console.log("Project ID:", config.projectId ? "✓ Set" : "✗ MISSING");
+        console.warn("🔥 Firebase Configuration Check:");
+        console.warn("API Key:", config.apiKey ? "✓ Set" : "✗ MISSING");
+        console.warn("Database URL:", config.databaseURL ? `✓ ${config.databaseURL}` : "✗ MISSING");
+        console.warn("Project ID:", config.projectId ? "✓ Set" : "✗ MISSING");
 
         if (!config.databaseURL) {
           setError("CRITICAL: NEXT_PUBLIC_FIREBASE_DATABASE_URL is not set in .env.local");
@@ -41,7 +41,7 @@ export function FirebaseDebug() {
         }
 
         // Try to read from root
-        console.log("🔍 Attempting to read from root path '/'...");
+        console.warn("🔍 Attempting to read from root path '/'...");
         const rootRef = ref(database, "/");
         const snapshot = await get(rootRef);
         
@@ -51,36 +51,36 @@ export function FirebaseDebug() {
           const availablePaths = Object.keys(data);
           setPaths(availablePaths);
           setConnectionStatus("✓ Connected - Data found at root");
-          console.log("✓ Root data structure:", availablePaths);
-          console.log("✓ Full data:", data);
+          console.warn("✓ Root data structure:", availablePaths);
+          console.warn("✓ Full data:", data);
         } else {
           setConnectionStatus("✓ Connected - Database is empty");
-          console.log("⚠️ Database exists but contains no data");
+          console.warn("⚠️ Database exists but contains no data");
         }
 
         // Try specific paths
         const pathsToCheck = ["/readings", "/sensorReadings", "/devices", "/data"];
 
-        console.log("\n🔍 Checking specific paths:");
+        console.warn("\n🔍 Checking specific paths:");
         for (const path of pathsToCheck) {
           const pathRef = ref(database, path);
           const pathSnapshot = await get(pathRef);
           if (pathSnapshot.exists()) {
             const pathData = pathSnapshot.val();
-            console.log(`✓ Data found at '${path}':`, pathData);
+            console.warn(`✓ Data found at '${path}':`, pathData);
           } else {
-            console.log(`✗ No data at '${path}'`);
+            console.warn(`✗ No data at '${path}'`);
           }
         }
 
         // Set up real-time listener on /readings
-        console.log("\n🔴 Setting up real-time listener on /readings...");
+        console.warn("\n🔴 Setting up real-time listener on /readings...");
         const readingsRef = ref(database, "readings");
         onValue(readingsRef, (snapshot) => {
           if (snapshot.exists()) {
-            console.log("🔴 LIVE UPDATE - Data received from /readings:", snapshot.val());
+            console.warn("🔴 LIVE UPDATE - Data received from /readings:", snapshot.val());
           } else {
-            console.log("🔴 LIVE UPDATE - No data at /readings");
+            console.warn("🔴 LIVE UPDATE - No data at /readings");
           }
         });
 

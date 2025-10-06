@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useAllSensorData } from "@/hooks/use-sensor-data";
 import { SensorReading } from "@/types/sensor";
 import { AppSidebar } from "@/components/app-sidebar"
