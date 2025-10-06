@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { SensorReading } from "@/types/sensor";
 import {
   Table,
@@ -158,9 +158,9 @@ export function SensorDataDetailedTable({ data, loading, itemsPerPage = 10 }: Se
                 const sampleCount = reading.n || 50;
 
                 return (
-                  <>
+                  <Fragment key={reading.id}>
                     {/* Summary Row */}
-                    <TableRow key={reading.id} className="bg-muted/50 font-medium hover:bg-muted/70">
+                    <TableRow className="bg-muted/50 font-medium hover:bg-muted/70">
                       <TableCell>
                         <Button
                           variant="ghost"
@@ -235,7 +235,7 @@ export function SensorDataDetailedTable({ data, loading, itemsPerPage = 10 }: Se
                         ))}
                       </>
                     )}
-                  </>
+                  </Fragment>
                 );
               })}
             </TableBody>
