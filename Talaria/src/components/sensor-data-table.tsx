@@ -28,12 +28,6 @@ const avg = (arr: number[]) => {
   return sum / arr.length;
 };
 
-// Helper function to calculate max of array
-const max = (arr: number[]) => {
-  if (!arr || arr.length === 0) return 0;
-  return Math.max(...arr);
-};
-
 export function SensorDataTable({ data, loading, itemsPerPage = 20 }: SensorDataTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   

@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useAllSensorData } from "@/hooks/use-sensor-data";
 import { SensorReading } from "@/types/sensor";
 import { AppSidebar } from "@/components/app-sidebar"
@@ -10,7 +9,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
-import { Info, Users, LayoutDashboard, Download } from "lucide-react";
+import { Info, Users, LayoutDashboard, Download, Home, Image as ImageIcon, Brain } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +19,13 @@ export default function DatabasePage() {
   const { data: sensorReadings, loading, error } = useAllSensorData(); // Get ALL readings
 
   const dockItems = [
+    {
+      icon: Home,
+      label: "Home",
+      onClick: () => {
+        router.push("/");
+      },
+    },
     {
       icon: Info,
       label: "About",
@@ -32,6 +38,20 @@ export default function DatabasePage() {
       label: "Team",
       onClick: () => {
         router.push("/team");
+      },
+    },
+    {
+      icon: ImageIcon,
+      label: "Gallery",
+      onClick: () => {
+        router.push("/gallery");
+      },
+    },
+    {
+      icon: Brain,
+      label: "ML Models",
+      onClick: () => {
+        router.push("/ml-models");
       },
     },
     {

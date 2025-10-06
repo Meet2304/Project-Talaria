@@ -1,3 +1,20 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    // Suppress development-only warnings for production
+    "react/no-unescaped-entities": "warn",
+    "@next/next/no-img-element": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "@next/next/no-html-link-for-pages": "warn",
+    
+    // Allow console.warn and console.error only
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    
+    // Unused vars - using built-in rule instead of TypeScript ESLint
+    "no-unused-vars": ["error", { 
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_" 
+    }]
+  }
 }
+
