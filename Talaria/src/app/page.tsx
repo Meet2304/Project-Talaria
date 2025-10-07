@@ -7,6 +7,7 @@ import { FeatureCard } from "@/components/feature-card";
 import { Activity, Heart, Footprints, TrendingUp, Info, Users, LayoutDashboard, Home as HomeIcon, Image as ImageIcon, Brain } from "lucide-react";
 import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
+import { InteractiveMenu } from "@/components/modern-mobile-menu";
 
 export default function Home() {
   const router = useRouter();
@@ -56,13 +57,26 @@ export default function Home() {
     },
   ];
 
+  const mobileMenuItems = [
+    { label: "Home", icon: HomeIcon },
+    { label: "About", icon: Info },
+    { label: "Team", icon: Users },
+    { label: "Gallery", icon: ImageIcon },
+    { label: "Dashboard", icon: LayoutDashboard },
+  ];
+
   return (
     <div className="min-h-screen relative">
       {/* Wave Background */}
       <WaveBackground />
 
-      {/* Dock Navigation - Fixed to Bottom */}
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50">
+      {/* Mobile Navigation - Fixed to Bottom (visible only on mobile) */}
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
+        <InteractiveMenu items={mobileMenuItems} accentColor="#1e293b" />
+      </div>
+
+      {/* Desktop Dock Navigation - Fixed to Bottom (hidden on mobile) */}
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
         <Dock items={dockItems} />
       </div>
       {/* Hero Section */}

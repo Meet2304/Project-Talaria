@@ -55,7 +55,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-2"
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="/dashboard" className="flex items-center gap-1 bg-slate-900 hover:bg-slate-800 rounded-md px-3 py-2">
                 <div className="relative w-14 h-14">
@@ -66,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     className="object-contain"
                   />
                 </div>
-                <span className="text-lg font-semibold text-white">TALARIA</span>
+                <span className="text-base font-semibold text-white">TALARIA</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
