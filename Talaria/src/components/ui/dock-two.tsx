@@ -41,12 +41,12 @@ const DockIconButton = React.forwardRef<HTMLButtonElement, DockIconButtonProps>(
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
         className={cn(
-          "relative group p-2 sm:p-3 rounded-lg",
+          "relative group p-3 sm:p-3 rounded-lg",
           "hover:bg-secondary transition-colors",
           className
         )}
       >
-        <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
+        <Icon className="w-6 h-6 sm:w-5 sm:h-5 text-foreground" />
         <span className={cn(
           "absolute -top-8 left-1/2 -translate-x-1/2",
           "px-2 py-1 rounded text-xs",
@@ -54,13 +54,6 @@ const DockIconButton = React.forwardRef<HTMLButtonElement, DockIconButtonProps>(
           "opacity-0 group-hover:opacity-100",
           "transition-opacity whitespace-nowrap pointer-events-none",
           "hidden sm:block"
-        )}>
-          {label}
-        </span>
-        <span className={cn(
-          "absolute -bottom-6 left-1/2 -translate-x-1/2",
-          "text-[10px] text-muted-foreground",
-          "block sm:hidden whitespace-nowrap"
         )}>
           {label}
         </span>
@@ -73,14 +66,14 @@ DockIconButton.displayName = "DockIconButton"
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
   ({ items, className }, ref) => {
     return (
-      <div ref={ref} className={cn("w-full h-16 sm:h-20 flex items-center justify-center p-2", className)}>
-        <div className="w-full max-w-4xl h-16 sm:h-20 rounded-2xl flex items-center justify-center relative">
+      <div ref={ref} className={cn("w-full h-20 sm:h-20 flex items-center justify-center p-2", className)}>
+        <div className="w-full max-w-4xl h-20 sm:h-20 rounded-2xl flex items-center justify-center relative">
           <motion.div
             initial="initial"
             animate="animate"
             variants={floatingAnimation}
             className={cn(
-              "flex items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 rounded-2xl",
+              "flex items-center gap-1 sm:gap-1 p-2 sm:p-2 rounded-2xl",
               "backdrop-blur-lg border shadow-lg",
               "bg-background/90 border-border",
               "hover:shadow-xl transition-shadow duration-300"

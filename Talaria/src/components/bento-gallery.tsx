@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from "react"
+import Image from "next/image"
 import {
   motion,
   AnimatePresence,
@@ -217,11 +218,15 @@ const ImageModal = ({
         className="relative w-full max-w-4xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <img
-          src={item.url}
-          alt={item.title}
-          className="h-auto max-h-[70vh] sm:max-h-[80vh] md:max-h-[90vh] w-full object-contain rounded-lg"
-        />
+        <div className="relative h-auto max-h-[70vh] sm:max-h-[80vh] md:max-h-[90vh] w-full">
+          <Image
+            src={item.url}
+            alt={item.title}
+            width={1200}
+            height={900}
+            className="h-auto max-h-[70vh] sm:max-h-[80vh] md:max-h-[90vh] w-full object-contain rounded-lg"
+          />
+        </div>
         <div className="mt-3 sm:mt-4 text-center px-2">
           <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">{item.title}</h3>
           <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-white/80">{item.desc}</p>
@@ -289,10 +294,11 @@ const ImageRowWithHeader = ({
           role="button"
           aria-label={`View ${item.title}`}
         >
-          <img
+          <Image
             src={item.url}
             alt={item.title}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           <div className="relative z-10 p-3 sm:p-4 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex items-end h-full">

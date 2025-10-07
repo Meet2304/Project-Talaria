@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
 import { FeatureCard } from "@/components/feature-card";
-import { Activity, Heart, Footprints, TrendingUp, Info, Users, LayoutDashboard, Home as HomeIcon, Image as ImageIcon, Brain } from "lucide-react";
+import { Activity, Heart, Footprints, TrendingUp, Info, Users, LayoutDashboard, Home as HomeIcon, Image as ImageIcon, Brain, Github } from "lucide-react";
 import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
 import { InteractiveMenu } from "@/components/modern-mobile-menu";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -132,16 +134,10 @@ export default function Home() {
               </div>
               
               <div className="space-y-4 sm:space-y-6">
-                <h3 className="text-xl sm:text-2xl font-semibold text-slate-900">Bridging Worlds</h3>
                 <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-                  <span className="font-bold text-slate-900">Project Talaria</span> carries this spirit into the modern age. Just as Hermes used the Talaria to bridge the realms of gods and mortals, this innovation bridges the gap between human movement and deeper self-awareness. By embedding intelligence into footwear, Project Talaria transforms every step into insight—tracking motion, stride, and heart rhythm to empower individuals with knowledge about their health, vitality, and performance.
+                  Inspired by the Talaria of Hermes—the golden winged sandals that let the messenger god soar between worlds—<b>Project Talaria</b> reimagines that myth for the modern age. It bridges body and mind, transforming every step into insight. Like Hermes, it empowers you to move with speed, balance, and purpose—transcending limits and unlocking the power within each stride.
                 </p>
               </div>
-
-              <div className="space-y-4 sm:space-y-6">
-                <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-                  Project Talaria is more than technology; it is a call to elevate human potential. It embodies the timeless pursuit of strength, speed, and balance, inspiring us to not only move forward but to move with purpose. Through every stride, it reminds us that like Hermes, we too can transcend limits and walk closer to greatness.
-                </p>
               </div>
 
               <div className="bg-slate-900 text-white p-6 sm:p-8 mt-6 sm:mt-8 shadow-lg">
@@ -149,7 +145,6 @@ export default function Home() {
                   &ldquo;Just as the winged sandals carried Hermes between realms, Project Talaria carries you toward a deeper understanding of yourself—one step at a time.&rdquo;
                 </p>
               </div>
-            </div>
           </CardContent>
         </FeatureCard>
       </section>
@@ -178,12 +173,13 @@ export default function Home() {
 
             <div className="relative border-t border-dashed">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
-              <div className="aspect-square">
-            <img
-              src="\images\features\Heart Rate.png"
-              className="w-full h-full object-contain p-4"
-              alt="Heart rate monitoring visualization"
-            />
+              <div className="aspect-square relative">
+                <Image
+                  src="/images/features/Heart Rate.png"
+                  fill
+                  className="object-contain p-4"
+                  alt="Heart rate monitoring visualization"
+                />
               </div>
             </div>
           </FeatureCard>
@@ -201,10 +197,11 @@ export default function Home() {
             
             <div className="relative border-t border-dashed">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
-              <div className="aspect-square">
-            <img
+              <div className="aspect-square relative">
+            <Image
               src="/images/features/SpO2.png"
-              className="w-full h-full object-contain p-4"
+              fill
+              className="object-contain p-4"
               alt="SpO2 monitoring visualization"
             />
               </div>
@@ -223,10 +220,11 @@ export default function Home() {
 
             <div className="relative border-t border-dashed">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
-              <div className="aspect-square">
-            <img
+              <div className="aspect-square relative">
+            <Image
               src="/images/features/Gait Analysis.png"
-              className="w-full h-full object-contain p-4"
+              fill
+              className="object-contain p-4"
               alt="Gait analysis visualization"
             />
               </div>
@@ -245,10 +243,11 @@ export default function Home() {
 
             <div className="relative border-t border-dashed">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
-              <div className="aspect-square">
-            <img
+              <div className="aspect-square relative">
+            <Image
               src="/images/features/Data Analytics.png"
-              className="w-full h-full object-contain p-4"
+              fill
+              className="object-contain p-4"
               alt="Live analytics dashboard visualization"
             />
               </div>
@@ -259,7 +258,7 @@ export default function Home() {
     </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10 pb-24 sm:pb-32">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10">
         <FeatureCard className="bg-gradient-to-r from-slate-900 to-slate-700 text-white">
           <CardContent className="py-12 sm:py-16 px-6 sm:px-8 text-center">
             <div className="max-w-2xl mx-auto space-y-4 sm:space-y-6">
@@ -277,6 +276,37 @@ export default function Home() {
               >
                 Start Monitoring
               </Button>
+            </div>
+          </CardContent>
+        </FeatureCard>
+      </section>
+
+      {/* Contribute Section */}
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+        <FeatureCard className="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 hover:shadow-2xl transition-all duration-300">
+          <CardContent className="py-12 sm:py-16 px-6 sm:px-8 text-center">
+            <div className="max-w-2xl mx-auto space-y-4 sm:space-y-6">
+              <Github className="w-12 h-12 text-slate-900 mx-auto" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">
+                Join the Project
+              </h2>
+              <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+                Talaria is an open-source project. We welcome contributors from around the world 
+                to help us build the future of integrated health monitoring.
+              </p>
+              <Link 
+                href="https://github.com/Meet2304/Project-Talaria" 
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button 
+                  size="lg" 
+                  className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 bg-slate-900 hover:bg-slate-800 mt-4"
+                >
+                  <Github className="mr-2 h-5 w-5" />
+                  View on GitHub
+                </Button>
+              </Link>
             </div>
           </CardContent>
         </FeatureCard>
