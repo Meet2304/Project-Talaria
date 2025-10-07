@@ -3,10 +3,13 @@
 import { useRouter } from "next/navigation";
 import { CardContent } from "@/components/ui/card";
 import { FeatureCard } from "@/components/feature-card";
-import { Activity, Heart, Footprints, TrendingUp, Info, Users, LayoutDashboard, ArrowLeft, Home, Image as ImageIcon, Brain } from "lucide-react";
+import { Info, Users, LayoutDashboard, ArrowLeft, Home, Image as ImageIcon, Brain, Github } from "lucide-react";
 import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
 import { Button } from "@/components/ui/button";
+import { RoadmapCard } from "@/components/roadmap-card";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function AboutPage() {
   const router = useRouter();
@@ -130,7 +133,7 @@ export default function AboutPage() {
         </FeatureCard>
 
         {/* Mission Section */}
-        <FeatureCard className="mb-12">
+        <FeatureCard className="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 mb-12">
           <CardContent className="p-8 md:p-12">
             <h2 className="text-3xl font-bold text-slate-900 mb-6">Our Mission</h2>
             <p className="text-lg text-slate-600 leading-relaxed mb-4">
@@ -146,110 +149,384 @@ export default function AboutPage() {
           </CardContent>
         </FeatureCard>
 
-        {/* Features Grid */}
+        {/* Roadmap Section */}
+        <FeatureCard className="mb-12">
+          <CardContent className="p-8 md:p-12">
+            <RoadmapCard 
+              title="Project Roadmap"
+              description="Our journey to revolutionize health monitoring"
+              items={[
+                {
+                  quarter: "1",
+                  title: "Hardware Integration",
+                  description: "MPU6050 & MAX30102 sensor integration with ESP32",
+                  status: "done"
+                },
+                {
+                  quarter: "2",
+                  title: "Cloud Platform",
+                  description: "Firebase real-time database & web dashboard",
+                  status: "in-progress"
+                },
+                {
+                  quarter: "3",
+                  title: "ML Analytics",
+                  description: "Machine learning models for gait pattern analysis",
+                  status: "upcoming"
+                },
+                {
+                  quarter: "4",
+                  title: "Mobile App",
+                  description: "Cross-platform mobile application release",
+                  status: "upcoming"
+                }
+              ]}
+            />
+          </CardContent>
+        </FeatureCard>
+
+        {/* Hardware Section */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <FeatureCard>
-              <CardContent className="pt-6">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 bg-red-100 flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-red-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900">Heart Rate Monitoring</h3>
-                  <p className="text-slate-600 text-sm">
-                    Real-time cardiovascular monitoring with MAX30102 sensor for accurate BPM tracking
-                  </p>
+          <h2 className="text-3xl font-bold text-slate-900 mb-8">Hardware Components</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* ESP32-S3 Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-blue-50 to-slate-50">
+                <Image
+                  src="/images/hardware/ESP32 S3.jpg"
+                  alt="ESP32-S3 Mini Dev Board"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">ESP32-S3 Mini Dev Board</h3>
+                  <span className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Microcontroller</span>
                 </div>
-              </CardContent>
-            </FeatureCard>
+                <p className="text-slate-600 text-sm mb-4">
+                  Powerful dual-core processor with built-in Wi-Fi and Bluetooth for wireless data transmission and real-time cloud connectivity.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Dual-core Xtensa LX7 CPU</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Wi-Fi & Bluetooth 5.0</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Low power consumption</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            <FeatureCard>
-              <CardContent className="pt-6">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 bg-blue-100 flex items-center justify-center">
-                    <Activity className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900">SpO2 Levels</h3>
-                  <p className="text-slate-600 text-sm">
-                    Continuous blood oxygen saturation tracking to monitor respiratory health
-                  </p>
+            {/* MAX30102 Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-red-50 to-slate-50">
+                <Image
+                  src="/images/hardware/MAX30102.png"
+                  alt="MAX30102 Heart Rate and SpO2 Sensor"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">MAX30102 Sensor</h3>
+                  <span className="inline-block bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Heart Rate & SpO2</span>
                 </div>
-              </CardContent>
-            </FeatureCard>
+                <p className="text-slate-600 text-sm mb-4">
+                  Integrated pulse oximetry and heart-rate monitor module for accurate cardiovascular health tracking.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Heart rate monitoring</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Blood oxygen saturation</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>I2C communication interface</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            <FeatureCard>
-              <CardContent className="pt-6">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 bg-green-100 flex items-center justify-center">
-                    <Footprints className="w-6 h-6 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900">Gait Analysis</h3>
-                  <p className="text-slate-600 text-sm">
-                    Precise movement tracking with MPU6050 for comprehensive gait patterns
-                  </p>
+            {/* MPU6050 Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-green-50 to-slate-50">
+                <Image
+                  src="/images/Hardware/MPU6050.jpg"
+                  alt="MPU6050 Inertial Measurement Unit"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">MPU6050 IMU</h3>
+                  <span className="inline-block bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Motion Tracking</span>
                 </div>
-              </CardContent>
-            </FeatureCard>
-
-            <FeatureCard>
-              <CardContent className="pt-6">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 bg-purple-100 flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                <p className="text-slate-600 text-sm mb-4">
+                  6-axis inertial measurement unit combining 3-axis accelerometer and 3-axis gyroscope for precise gait analysis.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>3-axis accelerometer</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900">Live Analytics</h3>
-                  <p className="text-slate-600 text-sm">
-                    Real-time data visualization and insights powered by Firebase
-                  </p>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>3-axis gyroscope</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>DMP for motion processing</span>
+                  </div>
                 </div>
-              </CardContent>
-            </FeatureCard>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Technology Section */}
-        <FeatureCard>
-          <CardContent className="p-8 md:p-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-6">Technology Stack</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Hardware</h3>
-                <ul className="space-y-2 text-slate-600">
-                  <li className="flex items-start">
-                    <span className="mr-2">•</span>
-                    <span><strong>MPU6050:</strong> 6-axis accelerometer and gyroscope for precise motion tracking</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2">•</span>
-                    <span><strong>MAX30102:</strong> Integrated pulse oximetry and heart-rate monitor</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2">•</span>
-                    <span><strong>Wireless Communication:</strong> Real-time data transmission to cloud</span>
-                  </li>
-                </ul>
+        {/* Software Section */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-slate-900 mb-8">Software Stack</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Firebase Realtime Database Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-orange-50 to-slate-50">
+                <Image
+                  src="/images/software/Firebase Realtime DB.jpg"
+                  alt="Firebase Realtime Database"
+                  fill
+                  className="object-contain"
+                />
               </div>
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Software</h3>
-                <ul className="space-y-2 text-slate-600">
-                  <li className="flex items-start">
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">Firebase Realtime Database</h3>
+                  <span className="inline-block bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded">Backend</span>
+                </div>
+                <p className="text-slate-600 text-sm mb-4">
+                  Cloud-hosted NoSQL database for real-time data synchronization and storage of sensor readings.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
                     <span className="mr-2">•</span>
-                    <span><strong>Next.js & React:</strong> Modern web application framework</span>
-                  </li>
-                  <li className="flex items-start">
+                    <span>Real-time data sync</span>
+                  </div>
+                  <div className="flex items-start">
                     <span className="mr-2">•</span>
-                    <span><strong>Firebase:</strong> Real-time database for live data streaming</span>
-                  </li>
-                  <li className="flex items-start">
+                    <span>Offline capabilities</span>
+                  </div>
+                  <div className="flex items-start">
                     <span className="mr-2">•</span>
-                    <span><strong>TypeScript:</strong> Type-safe development for reliability</span>
-                  </li>
-                </ul>
+                    <span>Automatic scaling</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </CardContent>
-        </FeatureCard>
+
+            {/* Firebase ML Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-purple-50 to-slate-50">
+                <Image
+                  src="/images/software/Firebase ML.jpg"
+                  alt="Firebase ML Integration"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">Firebase ML Integration</h3>
+                  <span className="inline-block bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">Machine Learning</span>
+                </div>
+                <p className="text-slate-600 text-sm mb-4">
+                  Machine learning platform for advanced gait pattern analysis and predictive health insights.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Custom ML models</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Pattern recognition</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Predictive analytics</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Next.js & React Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-cyan-50 to-slate-50">
+                <Image
+                  src="/images/software/React_Next.jpg"
+                  alt="Next.js and React Framework"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">Next.js & React</h3>
+                  <span className="inline-block bg-cyan-100 text-cyan-800 text-xs font-medium px-2.5 py-0.5 rounded">Frontend</span>
+                </div>
+                <p className="text-slate-600 text-sm mb-4">
+                  Modern web framework with React for building fast, interactive user interfaces and dashboards.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Server-side rendering</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Component-based architecture</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>TypeScript support</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* GitHub Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-slate-50 to-slate-100">
+                <Image
+                  src="/images/software/Github.jpg"
+                  alt="GitHub Version Control"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">GitHub</h3>
+                  <span className="inline-block bg-slate-100 text-slate-800 text-xs font-medium px-2.5 py-0.5 rounded">Version Control</span>
+                </div>
+                <p className="text-slate-600 text-sm mb-4">
+                  Open-source collaboration platform for version control and project management.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Version control system</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Collaborative development</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Open-source community</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Contribute Section */}
+        <div className="mb-12 text-center">
+          <FeatureCard className="bg-gradient-to-br from-slate-900 to-slate-700 hover:shadow-2xl transition-all duration-300">
+            <CardContent className="p-8 md:p-10">
+              <div className="max-w-2xl mx-auto space-y-6">
+                <Github className="w-12 h-12 text-white mx-auto" />
+                <h2 className="text-3xl font-bold text-white">Join the Project</h2>
+                <p className="text-lg text-slate-200 leading-relaxed">
+                  Talaria is an open-source project. We welcome contributors from around the world 
+                  to help us build the future of integrated health monitoring.
+                </p>
+                <Link 
+                  href="https://github.com/Meet2304/Project-Talaria" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="text-base sm:text-lg px-8 bg-white text-slate-900 hover:bg-slate-100 border-0 mt-4"
+                  >
+                    <Github className="mr-2 h-5 w-5" />
+                    View on GitHub
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </FeatureCard>
+        </div>
       </div>
     </div>
   );
