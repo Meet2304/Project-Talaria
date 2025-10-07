@@ -76,8 +76,8 @@ npm run lint
 
 ## 🔜 Upcoming Features
 
-- [ ] Firebase Realtime Database integration
-- [ ] Real-time data streaming from sensors
+- [X] Firebase Realtime Database integration
+- [X] Real-time data streaming from sensors
 - [ ] Interactive data visualization charts
 - [ ] User authentication and profiles
 - [ ] Historical data analysis
