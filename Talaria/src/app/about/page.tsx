@@ -200,7 +200,7 @@ export default function AboutPage() {
               {/* Image */}
               <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-blue-50 to-slate-50">
                 <Image
-                  src="/images/hardware/ESP32 S3.jpg"
+                  src="/images/hardware/esp32-s3.jpg"
                   alt="ESP32-S3 Mini Dev Board"
                   fill
                   className="object-contain"
@@ -243,7 +243,7 @@ export default function AboutPage() {
               {/* Image */}
               <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-red-50 to-slate-50">
                 <Image
-                  src="/images/hardware/MAX30102.png"
+                  src="/images/hardware/max30102.png"
                   alt="MAX30102 Heart Rate and SpO2 Sensor"
                   fill
                   className="object-contain"
@@ -286,7 +286,7 @@ export default function AboutPage() {
               {/* Image */}
               <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-green-50 to-slate-50">
                 <Image
-                  src="/images/Hardware/MPU6050.jpg"
+                  src="/images/Hardware/mpu6050.jpg"
                   alt="MPU6050 Inertial Measurement Unit"
                   fill
                   className="object-contain"
