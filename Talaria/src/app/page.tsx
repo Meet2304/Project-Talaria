@@ -10,7 +10,6 @@ import { Dock } from "@/components/ui/dock-two";
 import { InteractiveMenu } from "@/components/modern-mobile-menu";
 import Link from "next/link";
 import Image from "next/image";
-import { Analytics } from "@vercel/analytics/next"
 
 export default function Home() {
   const router = useRouter();
