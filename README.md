@@ -1,5 +1,5 @@
 <p align = 'center'>
-  <img src = 'https://github.com/Meet2304/Project-Talaria/blob/main/Project-Talaria-Header.png'>
+  <img src = 'https://github.com/Meet2304/Project-Talaria/blob/main/Talaria/public/images/Assets/Talaria-Banner-v0.2.png'>
 </p>
 
 <h1 align="center">Project Talaria</h1>
