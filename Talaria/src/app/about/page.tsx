@@ -243,7 +243,7 @@ export default function AboutPage() {
               {/* Image */}
               <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-red-50 to-slate-50">
                 <Image
-                  src="/images/Hardware/esp32-s3.jpg"
+                  src="/images/Hardware/MAX30102.png"
                   alt="MAX30102 Heart Rate and SpO2 Sensor"
                   fill
                   className="object-contain"
@@ -286,7 +286,7 @@ export default function AboutPage() {
               {/* Image */}
               <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-green-50 to-slate-50">
                 <Image
-                  src="/images/Hardware/mpu6050.jpg"
+                  src="/images/Hardware/MPU6050.jpg"
                   alt="MPU6050 Inertial Measurement Unit"
                   fill
                   className="object-contain"
