@@ -7,7 +7,6 @@ import { FeatureCard } from "@/components/feature-card";
 import { Activity, Heart, Footprints, TrendingUp, Info, Users, LayoutDashboard, Home as HomeIcon, Image as ImageIcon, Brain, Github } from "lucide-react";
 import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
-import { InteractiveMenu } from "@/components/modern-mobile-menu";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -59,28 +58,16 @@ export default function Home() {
     },
   ];
 
-  const mobileMenuItems = [
-    { label: "Home", icon: HomeIcon },
-    { label: "About", icon: Info },
-    { label: "Team", icon: Users },
-    { label: "Gallery", icon: ImageIcon },
-    { label: "Dashboard", icon: LayoutDashboard },
-  ];
-
   return (
     <div className="min-h-screen relative">
       {/* Wave Background */}
       <WaveBackground />
 
-      {/* Mobile Navigation - Fixed to Bottom (visible only on mobile) */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
-        <InteractiveMenu items={mobileMenuItems} accentColor="#1e293b" />
-      </div>
-
-      {/* Desktop Dock Navigation - Fixed to Bottom (hidden on mobile) */}
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
+      {/* Dock Navigation - Fixed to Bottom (visible on all screen sizes) */}
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50">
         <Dock items={dockItems} />
       </div>
+      
       {/* Hero Section */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 text-center relative z-10">
         <div className="max-w-6xl mx-auto space-y-8 sm:space-y-12 lg:space-y-16">

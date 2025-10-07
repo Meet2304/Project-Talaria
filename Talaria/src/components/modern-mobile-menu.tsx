@@ -5,6 +5,7 @@ type IconComponentType = React.ElementType<{ className?: string }>;
 export interface InteractiveMenuItem {
   label: string;
   icon: IconComponentType;
+  onClick?: () => void;
 }
 
 export interface InteractiveMenuProps {
@@ -65,6 +66,10 @@ const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ items, accentColor })
 
   const handleItemClick = (index: number) => {
     setActiveIndex(index);
+    // Call the onClick handler if provided
+    if (finalItems[index].onClick) {
+      finalItems[index].onClick?.();
+    }
   };
 
   const navStyle = useMemo(() => {
