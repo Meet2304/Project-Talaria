@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ref, onValue, query, orderByChild, limitToLast } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { database } from "@/lib/firebase";
 import { SensorReading, DashboardStats, ChartDataPoint } from "@/types/sensor";
 
@@ -12,24 +12,37 @@ export function useSensorData(limit: number = 100) {
 
   useEffect(() => {
     try {
-      const deviceId = "gsl9JXZVy2U4ajwRjg4pDcLZ17j2";
-      const sensorRef = ref(database, `devices/${deviceId}/readings`);
-      const sensorQuery = query(sensorRef, orderByChild("ts"), limitToLast(limit)); // Order by 'ts' field
+      const rootRef = ref(database, '/');
       
       const unsubscribe = onValue(
-        sensorQuery,
+        rootRef,
         (snapshot) => {
           if (snapshot.exists()) {
-            const readings: SensorReading[] = [];
-            snapshot.forEach((childSnapshot) => {
-              const data = childSnapshot.val();
-              readings.push({
-                id: childSnapshot.key as string,
-                ...data,
-                timestamp: data.ts || data.timestamp, // Map 'ts' to 'timestamp'
-              });
+            const allReadings: SensorReading[] = [];
+            const rootData = snapshot.val();
+            
+            // Auto-detect Firebase structure (supports both 'devices' parent key or direct structure)
+            const devicesData = rootData.devices && typeof rootData.devices === 'object' 
+              ? rootData.devices 
+              : rootData;
+            
+            // Iterate through all devices and extract readings
+            Object.entries(devicesData).forEach(([deviceId, deviceData]: [string, any]) => {
+              if (deviceData && typeof deviceData === 'object' && deviceData.readings) {
+                Object.entries(deviceData.readings).forEach(([id, data]: [string, any]) => {
+                  allReadings.push({
+                    id,
+                    device_id: deviceId,
+                    ...data,
+                    timestamp: data.ts || data.timestamp,
+                  });
+                });
+              }
             });
-            setData(readings.reverse()); // Most recent first
+            
+            // Sort by timestamp (newest first) and apply limit
+            allReadings.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            setData(allReadings.slice(0, limit));
           } else {
             setData([]);
           }
@@ -58,28 +71,42 @@ export function useAllSensorData() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // Add trigger for manual refresh
 
   useEffect(() => {
     try {
-      const deviceId = "abJOOmcIBVV0oqiUVVYasBkznZa2"; // Updated device ID from JSON
-      const sensorRef = ref(database, `devices/${deviceId}/readings`);
-      const sensorQuery = query(sensorRef, orderByChild("ts")); // Order by 'ts' field
+      const rootRef = ref(database, '/');
+      setLoading(true);
 
-      // Real-time listener - automatically updates when Firebase data changes
       const unsubscribe = onValue(
-        sensorQuery,
+        rootRef,
         (snapshot) => {
           if (snapshot.exists()) {
-            const readings: SensorReading[] = [];
-            snapshot.forEach((childSnapshot) => {
-              const data = childSnapshot.val();
-              readings.push({
-                id: childSnapshot.key as string,
-                ...data,
-                timestamp: data.ts || data.timestamp, // Map 'ts' to 'timestamp'
-              });
+            const allReadings: SensorReading[] = [];
+            const rootData = snapshot.val();
+            
+            // Auto-detect Firebase structure (supports both 'devices' parent key or direct structure)
+            const devicesData = rootData.devices && typeof rootData.devices === 'object' 
+              ? rootData.devices 
+              : rootData;
+            
+            // Iterate through all devices and extract readings
+            Object.entries(devicesData).forEach(([deviceId, deviceData]: [string, any]) => {
+              if (deviceData && typeof deviceData === 'object' && deviceData.readings) {
+                Object.entries(deviceData.readings).forEach(([id, data]: [string, any]) => {
+                  allReadings.push({
+                    id,
+                    device_id: deviceId,
+                    ...data,
+                    timestamp: data.ts || data.timestamp,
+                  });
+                });
+              }
             });
-            setData(readings.reverse()); // Most recent first
+            
+            // Sort by timestamp (newest first)
+            allReadings.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            setData(allReadings);
             setLastUpdate(new Date());
           } else {
             setData([]);
@@ -98,12 +125,12 @@ export function useAllSensorData() {
       setError(err instanceof Error ? err.message : "Unknown error");
       setLoading(false);
     }
-  }, []);
+  }, [refreshTrigger]);
 
-  // Manual refresh function
+  // Manual refresh function - triggers a new subscription
   const refresh = () => {
     setLoading(true);
-    setLastUpdate(new Date());
+    setRefreshTrigger(prev => prev + 1); // Increment to trigger useEffect
   };
 
   return { data, loading, error, lastUpdate, refresh };
@@ -171,9 +198,9 @@ export function useDashboardStats() {
       const heartRateTrend = prevAvgHR > 0 ? ((currentAvgHR - prevAvgHR) / prevAvgHR) * 100 : 0;
       const spo2Trend = prevAvgSpo2 > 0 ? ((currentAvgSpo2 - prevAvgSpo2) / prevAvgSpo2) * 100 : 0;
       
-      // Calculate total steps (estimated from accelerometer data)
-      const totalSteps = validReadings.reduce((sum, r) => sum + (r.n || 50), 0);
-      const prevSteps = Math.max(0, validReadings.slice(50).reduce((sum, r) => sum + (r.n || 50), 0));
+      // Calculate total steps from steps_in_batch field
+      const totalSteps = validReadings.reduce((sum, r) => sum + (r.steps_in_batch || 0), 0);
+      const prevSteps = Math.max(0, validReadings.slice(50).reduce((sum, r) => sum + (r.steps_in_batch || 0), 0));
       const stepsTrend = prevSteps > 0 ? ((totalSteps - prevSteps) / prevSteps) * 100 : 0;
       
       // Calculate active duration (in minutes)
@@ -181,7 +208,7 @@ export function useDashboardStats() {
       const newestTimestamp = validReadings[0]?.timestamp || Date.now();
       const activeDuration = Math.round((newestTimestamp - oldestTimestamp) / 60000);
 
-      setStats({
+      const calculatedStats = {
         avgHeartRate: Math.round(currentAvgHR),
         avgSpo2: Math.round(currentAvgSpo2 * 10) / 10,
         totalSteps,
@@ -189,7 +216,9 @@ export function useDashboardStats() {
         heartRateTrend: Math.round(heartRateTrend * 10) / 10,
         spo2Trend: Math.round(spo2Trend * 10) / 10,
         stepsTrend: Math.round(stepsTrend * 10) / 10,
-      });
+      };
+
+      setStats(calculatedStats);
     }
   }, [data]);
 
@@ -234,10 +263,11 @@ export function useChartData(limit: number = 50) {
           const accelMagnitude = Math.sqrt(avgAx ** 2 + avgAy ** 2 + avgAz ** 2);
 
           return {
-            timestamp: new Date(reading.timestamp).toLocaleTimeString(),
+            timestamp: reading.timestamp.toString(), // Use actual timestamp for proper formatting
             heartRate: avgHR,
             spo2: avgSpo2,
             accelMagnitude: Math.round(accelMagnitude * 100) / 100,
+            steps: reading.steps_in_batch || 0,
           };
         })
         .reverse(); // Show oldest to newest for chart
@@ -245,6 +275,85 @@ export function useChartData(limit: number = 50) {
       setChartData(formattedData);
     }
   }, [data]);
+
+  return { chartData, loading, error };
+}
+
+// Helper function to filter data by time range
+export function filterDataByTimeRange(data: SensorReading[], timeRange: string): SensorReading[] {
+  if (data.length === 0) return data;
+  
+  const now = Date.now();
+  let cutoffTime = now;
+  
+  switch (timeRange) {
+    case "1h":
+      cutoffTime = now - (60 * 60 * 1000); // 1 hour
+      break;
+    case "7h":
+      cutoffTime = now - (7 * 60 * 60 * 1000); // 7 hours
+      break;
+    case "7d":
+      cutoffTime = now - (7 * 24 * 60 * 60 * 1000); // 7 days
+      break;
+    case "30d":
+      cutoffTime = now - (30 * 24 * 60 * 60 * 1000); // 30 days
+      break;
+    default:
+      return data;
+  }
+  
+  return data.filter(reading => reading.timestamp >= cutoffTime);
+}
+
+// Hook for chart data with time-based filtering
+export function useChartDataWithTimeFilter(timeRange: string = "7h") {
+  const { data: allData, loading, error } = useAllSensorData();
+  const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
+
+  useEffect(() => {
+    if (allData.length > 0) {
+      // Filter data by time range
+      const filteredData = filterDataByTimeRange(allData, timeRange);
+      
+      // Helper to calculate average of an array
+      const avg = (arr: number[]) => {
+        if (!arr || arr.length === 0) return 0;
+        return arr.reduce((a, b) => a + b, 0) / arr.length;
+      };
+
+      // Filter valid readings and map to chart format
+      const formattedData: ChartDataPoint[] = filteredData
+        .filter(reading => 
+          (reading.hr || reading.bpm) &&
+          (reading.spo2 || reading.ir) &&
+          Array.isArray(reading.hr || reading.bpm) &&
+          Array.isArray(reading.spo2 || reading.ir)
+        )
+        .map((reading) => {
+          // Calculate averages from arrays
+          const avgHR = avg(reading.hr || reading.bpm || []);
+          const avgSpo2 = avg(reading.spo2 || reading.ir || []);
+          const avgAx = avg(reading.accX || reading.ax || []);
+          const avgAy = avg(reading.accY || reading.ay || []);
+          const avgAz = avg(reading.accZ || reading.az || []);
+          
+          // Calculate acceleration magnitude
+          const accelMagnitude = Math.sqrt(avgAx ** 2 + avgAy ** 2 + avgAz ** 2);
+
+          return {
+            timestamp: reading.timestamp.toString(),
+            heartRate: Math.round(avgHR),
+            spo2: Math.round(avgSpo2 * 10) / 10,
+            accelMagnitude: Math.round(accelMagnitude * 100) / 100,
+            steps: reading.steps_in_batch || 0,
+          };
+        })
+        .reverse(); // Show oldest to newest for chart
+
+      setChartData(formattedData);
+    }
+  }, [allData, timeRange]);
 
   return { chartData, loading, error };
 }

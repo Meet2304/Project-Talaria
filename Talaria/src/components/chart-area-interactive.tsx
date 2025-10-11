@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { useChartData } from "@/hooks/use-sensor-data"
+import { useChartDataWithTimeFilter } from "@/hooks/use-sensor-data"
 import {
   Card,
   CardContent,
@@ -38,23 +38,22 @@ const chartConfig = {
     label: "SpO2",
     color: "hsl(var(--chart-2))",
   },
-  accelMagnitude: {
-    label: "Movement",
+  steps: {
+    label: "Steps",
     color: "hsl(var(--chart-3))",
   },
 } satisfies ChartConfig
 
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile()
-  const [timeRange, setTimeRange] = React.useState("30")
-  const [metricType, setMetricType] = React.useState<"heartRate" | "spo2" | "accelMagnitude">("heartRate")
+  const [timeRange, setTimeRange] = React.useState("7h")
+  const [metricType, setMetricType] = React.useState<"heartRate" | "spo2" | "steps">("heartRate")
   
-  const limit = parseInt(timeRange)
-  const { chartData, loading, error } = useChartData(limit)
+  const { chartData, loading, error } = useChartDataWithTimeFilter(timeRange)
 
   React.useEffect(() => {
     if (isMobile) {
-      setTimeRange("7")
+      setTimeRange("1h")
     }
   }, [isMobile])
 
@@ -77,8 +76,8 @@ export function ChartAreaInteractive() {
         return "Heart Rate Over Time"
       case "spo2":
         return "Blood Oxygen Level (SpO2)"
-      case "accelMagnitude":
-        return "Movement Intensity"
+      case "steps":
+        return "Steps Per Reading"
       default:
         return "Sensor Data"
     }
@@ -90,7 +89,7 @@ export function ChartAreaInteractive() {
         return [40, 200]
       case "spo2":
         return [85, 100]
-      case "accelMagnitude":
+      case "steps":
         return [0, 'auto']
       default:
         return ['auto', 'auto']
@@ -103,8 +102,8 @@ export function ChartAreaInteractive() {
         return "var(--color-heartRate)"
       case "spo2":
         return "var(--color-spo2)"
-      case "accelMagnitude":
-        return "var(--color-accelMagnitude)"
+      case "steps":
+        return "var(--color-steps)"
       default:
         return "var(--color-heartRate)"
     }
@@ -121,29 +120,31 @@ export function ChartAreaInteractive() {
           <span className="@[540px]/card:hidden">Real-time data</span>
         </CardDescription>
         <div className="absolute right-4 top-4 flex gap-2">
-          <Select value={metricType} onValueChange={(value) => setMetricType(value as "heartRate" | "spo2" | "accelMagnitude")}>
+          <Select value={metricType} onValueChange={(value) => setMetricType(value as "heartRate" | "spo2" | "steps")}>
             <SelectTrigger className="w-32" aria-label="Select metric">
               <SelectValue placeholder="Metric" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
               <SelectItem value="heartRate" className="rounded-lg">Heart Rate</SelectItem>
               <SelectItem value="spo2" className="rounded-lg">SpO2</SelectItem>
-              <SelectItem value="accelMagnitude" className="rounded-lg">Movement</SelectItem>
+              <SelectItem value="steps" className="rounded-lg">Steps</SelectItem>
             </SelectContent>
           </Select>
           <ToggleGroup type="single" value={timeRange} onValueChange={setTimeRange} variant="outline" className="@[767px]/card:flex hidden">
-            <ToggleGroupItem value="100" className="h-8 px-2.5">Last 100</ToggleGroupItem>
-            <ToggleGroupItem value="30" className="h-8 px-2.5">Last 30</ToggleGroupItem>
-            <ToggleGroupItem value="7" className="h-8 px-2.5">Last 7</ToggleGroupItem>
+            <ToggleGroupItem value="1h" className="h-8 px-2.5">Last Hour</ToggleGroupItem>
+            <ToggleGroupItem value="7h" className="h-8 px-2.5">Last 7 Hours</ToggleGroupItem>
+            <ToggleGroupItem value="7d" className="h-8 px-2.5">Last 7 Days</ToggleGroupItem>
+            <ToggleGroupItem value="30d" className="h-8 px-2.5">Last 30 Days</ToggleGroupItem>
           </ToggleGroup>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger className="@[767px]/card:hidden flex w-32" aria-label="Select a value">
-              <SelectValue placeholder="Last 30" />
+              <SelectValue placeholder="Last 7 Hours" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
-              <SelectItem value="100" className="rounded-lg">Last 100</SelectItem>
-              <SelectItem value="30" className="rounded-lg">Last 30</SelectItem>
-              <SelectItem value="7" className="rounded-lg">Last 7</SelectItem>
+              <SelectItem value="1h" className="rounded-lg">Last Hour</SelectItem>
+              <SelectItem value="7h" className="rounded-lg">Last 7 Hours</SelectItem>
+              <SelectItem value="7d" className="rounded-lg">Last 7 Days</SelectItem>
+              <SelectItem value="30d" className="rounded-lg">Last 30 Days</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -163,9 +164,37 @@ export function ChartAreaInteractive() {
                 </linearGradient>
               </defs>
               <CartesianGrid vertical={false} />
-              <XAxis dataKey="timestamp" tickLine={false} axisLine={false} tickMargin={8} minTickGap={32} tickFormatter={(value) => { const date = new Date(value); return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}} />
+              <XAxis 
+                dataKey="timestamp" 
+                tickLine={false} 
+                axisLine={false} 
+                tickMargin={8} 
+                minTickGap={32} 
+                tickFormatter={(value) => {
+                  const date = new Date(parseInt(value));
+                  return date.toLocaleTimeString("en-US", { 
+                    hour: "2-digit", 
+                    minute: "2-digit" 
+                  });
+                }} 
+              />
               <YAxis domain={getYAxisDomain()} tickLine={false} axisLine={false} tickMargin={8} />
-              <ChartTooltip cursor={false} content={<ChartTooltipContent labelFormatter={(value) => { return new Date(value).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}} indicator="dot" />} />
+              <ChartTooltip 
+                cursor={false} 
+                content={
+                  <ChartTooltipContent 
+                    labelFormatter={(value) => {
+                      return new Date(parseInt(value)).toLocaleString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                      });
+                    }} 
+                    indicator="dot" 
+                  />
+                } 
+              />
               <Area dataKey={metricType} type="natural" fill="url(#fillMetric)" stroke={getChartColor()} strokeWidth={2} />
             </AreaChart>
           </ChartContainer>

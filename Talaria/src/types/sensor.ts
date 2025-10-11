@@ -90,4 +90,5 @@ export interface ChartDataPoint {
   heartRate: number;
   spo2: number;
   accelMagnitude: number;
+  steps: number;
 }

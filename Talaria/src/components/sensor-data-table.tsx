@@ -115,14 +115,14 @@ export function SensorDataTable({ data, loading, itemsPerPage = 20 }: SensorData
             <TableBody>
               {currentData.map((reading, index) => {
                 // Calculate averages from arrays
-                const avgBpm = avg(reading.bpm);
-                const avgIR = avg(reading.ir);
-                const avgAx = avg(reading.ax);
-                const avgAy = avg(reading.ay);
-                const avgAz = avg(reading.az);
-                const avgGx = avg(reading.gx);
-                const avgGy = avg(reading.gy);
-                const avgGz = avg(reading.gz);
+                const avgBpm = avg(reading.bpm || []);
+                const avgIR = avg(reading.ir || []);
+                const avgAx = avg(reading.ax || []);
+                const avgAy = avg(reading.ay || []);
+                const avgAz = avg(reading.az || []);
+                const avgGx = avg(reading.gx || []);
+                const avgGy = avg(reading.gy || []);
+                const avgGz = avg(reading.gz || []);
 
                 const globalIndex = startIndex + index + 1;
 
