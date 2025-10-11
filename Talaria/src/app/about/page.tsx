@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { RoadmapCard } from "@/components/roadmap-card";
 import Link from "next/link";
 import Image from "next/image";
+import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function AboutPage() {
   const router = useRouter();
@@ -190,7 +191,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Hardware Components</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* ESP32-S3 Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -198,12 +199,12 @@ export default function AboutPage() {
               <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
               
               {/* Image */}
-              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-blue-50 to-slate-50">
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-blue-50 to-slate-50 overflow-hidden">
                 <Image
                   src="/images/Hardware/esp32-s3.jpg"
                   alt="ESP32-S3 Mini Dev Board"
                   fill
-                  className="object-contain"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               
@@ -233,7 +234,7 @@ export default function AboutPage() {
             </div>
 
             {/* MAX30102 Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -241,12 +242,12 @@ export default function AboutPage() {
               <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
               
               {/* Image */}
-              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-red-50 to-slate-50">
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-red-50 to-slate-50 overflow-hidden">
                 <Image
                   src="/images/Hardware/MAX30102.png"
                   alt="MAX30102 Heart Rate and SpO2 Sensor"
                   fill
-                  className="object-contain"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               
@@ -276,7 +277,7 @@ export default function AboutPage() {
             </div>
 
             {/* MPU6050 Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -284,12 +285,12 @@ export default function AboutPage() {
               <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
               
               {/* Image */}
-              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-green-50 to-slate-50">
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-green-50 to-slate-50 overflow-hidden">
                 <Image
                   src="/images/Hardware/MPU6050.jpg"
                   alt="MPU6050 Inertial Measurement Unit"
                   fill
-                  className="object-contain"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               
@@ -325,7 +326,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Software Stack</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Firebase Realtime Database Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -333,12 +334,12 @@ export default function AboutPage() {
               <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
               
               {/* Image */}
-              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-orange-50 to-slate-50">
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-orange-50 to-slate-50 overflow-hidden">
                 <Image
                   src="/images/software/Firebase Realtime DB.jpg"
                   alt="Firebase Realtime Database"
                   fill
-                  className="object-contain"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               
@@ -368,7 +369,7 @@ export default function AboutPage() {
             </div>
 
             {/* Firebase ML Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -376,12 +377,12 @@ export default function AboutPage() {
               <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
               
               {/* Image */}
-              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-purple-50 to-slate-50">
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-purple-50 to-slate-50 overflow-hidden">
                 <Image
                   src="/images/software/Firebase ML.jpg"
                   alt="Firebase ML Integration"
                   fill
-                  className="object-contain"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               
@@ -411,7 +412,7 @@ export default function AboutPage() {
             </div>
 
             {/* Next.js & React Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -419,12 +420,12 @@ export default function AboutPage() {
               <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
               
               {/* Image */}
-              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-cyan-50 to-slate-50">
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-cyan-50 to-slate-50 overflow-hidden">
                 <Image
                   src="/images/software/React_Next.jpg"
                   alt="Next.js and React Framework"
                   fill
-                  className="object-contain"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               
@@ -454,7 +455,7 @@ export default function AboutPage() {
             </div>
 
             {/* GitHub Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -462,12 +463,12 @@ export default function AboutPage() {
               <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
               
               {/* Image */}
-              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-slate-50 to-slate-100">
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
                 <Image
                   src="/images/software/Github.jpg"
                   alt="GitHub Version Control"
                   fill
-                  className="object-contain"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               
@@ -527,6 +528,11 @@ export default function AboutPage() {
             </CardContent>
           </FeatureCard>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10 pb-20">
+        <MinimalFooter />
       </div>
     </div>
   );

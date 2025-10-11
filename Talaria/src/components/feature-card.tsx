@@ -8,7 +8,7 @@ interface FeatureCardProps {
 }
 
 export const FeatureCard = ({ children, className }: FeatureCardProps) => (
-    <Card className={cn('group relative shadow-lg hover:shadow-xl transition-shadow bg-white/80 backdrop-blur-sm border-none', className)}>
+    <Card className={cn('group relative shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm border-none', className)}>
         <CardDecorator />
         {children}
     </Card>

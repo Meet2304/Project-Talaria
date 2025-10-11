@@ -8,6 +8,7 @@ import { Home, Info, Users, LayoutDashboard, Image as ImageIcon, Brain, External
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ML_MODELS, formatMetric, formatSamples, getColorClasses } from "@/lib/ml-models-config";
+import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function MLModelsPage() {
   const router = useRouter();
@@ -151,10 +152,9 @@ export default function MLModelsPage() {
       </section>
 
       {/* Footer */}
-      <footer className="container mx-auto px-4 py-8 pb-24 text-center text-slate-600 text-xs relative z-10">
-        <p>Made on Earth, by Humans</p>
-        <p>&copy; 2025 Talaria. All rights reserved.</p>
-      </footer>
+      <div className="relative z-10 pb-20">
+        <MinimalFooter />
+      </div>
     </div>
   );
 }
