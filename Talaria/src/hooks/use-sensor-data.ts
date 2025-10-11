@@ -57,13 +57,15 @@ export function useAllSensorData() {
   const [data, setData] = useState<SensorReading[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
 
   useEffect(() => {
     try {
-      const deviceId = "gsl9JXZVy2U4ajwRjg4pDcLZ17j2";
+      const deviceId = "abJOOmcIBVV0oqiUVVYasBkznZa2"; // Updated device ID from JSON
       const sensorRef = ref(database, `devices/${deviceId}/readings`);
       const sensorQuery = query(sensorRef, orderByChild("ts")); // Order by 'ts' field
 
+      // Real-time listener - automatically updates when Firebase data changes
       const unsubscribe = onValue(
         sensorQuery,
         (snapshot) => {
@@ -78,6 +80,7 @@ export function useAllSensorData() {
               });
             });
             setData(readings.reverse()); // Most recent first
+            setLastUpdate(new Date());
           } else {
             setData([]);
           }
@@ -97,7 +100,13 @@ export function useAllSensorData() {
     }
   }, []);
 
-  return { data, loading, error };
+  // Manual refresh function
+  const refresh = () => {
+    setLoading(true);
+    setLastUpdate(new Date());
+  };
+
+  return { data, loading, error, lastUpdate, refresh };
 }
 
 export function useLatestReading() {
@@ -123,11 +132,11 @@ export function useDashboardStats() {
 
       // Filter valid readings that have the required data arrays
       const validReadings = data.filter(r => 
-        r.bpm && 
-        Array.isArray(r.bpm) &&
-        r.ir &&
-        Array.isArray(r.ir) &&
-        r.bpm.length > 0
+        (r.hr || r.bpm) && 
+        Array.isArray(r.hr || r.bpm) &&
+        r.spo2 &&
+        Array.isArray(r.spo2) &&
+        (r.hr || r.bpm).length > 0
       );
 
       if (validReadings.length === 0) {
@@ -145,27 +154,26 @@ export function useDashboardStats() {
       }
 
       // Calculate current averages from the arrays
-      // Each reading has 50 samples, we calculate the average across all readings
       const currentData = validReadings.slice(0, Math.min(50, validReadings.length));
-      const currentAvgHR = currentData.reduce((sum, r) => sum + avg(r.bpm), 0) / currentData.length;
-      const currentAvgIR = currentData.reduce((sum, r) => sum + avg(r.ir), 0) / currentData.length;
+      const currentAvgHR = currentData.reduce((sum, r) => sum + avg(r.hr || r.bpm || []), 0) / currentData.length;
+      const currentAvgSpo2 = currentData.reduce((sum, r) => sum + avg(r.spo2 || []), 0) / currentData.length;
       
       // Calculate previous averages for trend
       const prevData = validReadings.slice(50, Math.min(100, validReadings.length));
       const prevAvgHR = prevData.length > 0 
-        ? prevData.reduce((sum, r) => sum + avg(r.bpm), 0) / prevData.length 
+        ? prevData.reduce((sum, r) => sum + avg(r.hr || r.bpm || []), 0) / prevData.length 
         : currentAvgHR;
-      const prevAvgIR = prevData.length > 0
-        ? prevData.reduce((sum, r) => sum + avg(r.ir), 0) / prevData.length
-        : currentAvgIR;
+      const prevAvgSpo2 = prevData.length > 0
+        ? prevData.reduce((sum, r) => sum + avg(r.spo2 || []), 0) / prevData.length
+        : currentAvgSpo2;
       
       // Calculate trends
       const heartRateTrend = prevAvgHR > 0 ? ((currentAvgHR - prevAvgHR) / prevAvgHR) * 100 : 0;
-      const irTrend = prevAvgIR > 0 ? ((currentAvgIR - prevAvgIR) / prevAvgIR) * 100 : 0;
+      const spo2Trend = prevAvgSpo2 > 0 ? ((currentAvgSpo2 - prevAvgSpo2) / prevAvgSpo2) * 100 : 0;
       
       // Calculate total steps (estimated from accelerometer data)
-      const totalSteps = validReadings.length * 50; // Rough estimate: 50 samples per reading
-      const prevSteps = Math.max(0, (validReadings.length - 50) * 50);
+      const totalSteps = validReadings.reduce((sum, r) => sum + (r.n || 50), 0);
+      const prevSteps = Math.max(0, validReadings.slice(50).reduce((sum, r) => sum + (r.n || 50), 0));
       const stepsTrend = prevSteps > 0 ? ((totalSteps - prevSteps) / prevSteps) * 100 : 0;
       
       // Calculate active duration (in minutes)
@@ -175,11 +183,11 @@ export function useDashboardStats() {
 
       setStats({
         avgHeartRate: Math.round(currentAvgHR),
-        avgSpo2: Math.round(currentAvgIR * 10) / 10, // Using IR as proxy for SpO2
+        avgSpo2: Math.round(currentAvgSpo2 * 10) / 10,
         totalSteps,
         activeDuration,
         heartRateTrend: Math.round(heartRateTrend * 10) / 10,
-        spo2Trend: Math.round(irTrend * 10) / 10,
+        spo2Trend: Math.round(spo2Trend * 10) / 10,
         stepsTrend: Math.round(stepsTrend * 10) / 10,
       });
     }
@@ -203,32 +211,32 @@ export function useChartData(limit: number = 50) {
       // Filter valid readings and map to chart format
       const formattedData: ChartDataPoint[] = data
         .filter(reading => 
-          reading.bpm &&
-          reading.ir &&
-          reading.ax &&
-          reading.ay &&
-          reading.az &&
-          Array.isArray(reading.bpm) &&
-          Array.isArray(reading.ir) &&
-          Array.isArray(reading.ax) &&
-          Array.isArray(reading.ay) &&
-          Array.isArray(reading.az)
+          (reading.hr || reading.bpm) &&
+          (reading.spo2 || reading.ir) &&
+          (reading.accX || reading.ax) &&
+          (reading.accY || reading.ay) &&
+          (reading.accZ || reading.az) &&
+          Array.isArray(reading.hr || reading.bpm) &&
+          Array.isArray(reading.spo2 || reading.ir) &&
+          Array.isArray(reading.accX || reading.ax) &&
+          Array.isArray(reading.accY || reading.ay) &&
+          Array.isArray(reading.accZ || reading.az)
         )
         .map((reading) => {
           // Calculate averages from arrays
-          const avgBpm = avg(reading.bpm);
-          const avgIR = avg(reading.ir);
-          const avgAx = avg(reading.ax);
-          const avgAy = avg(reading.ay);
-          const avgAz = avg(reading.az);
+          const avgHR = avg(reading.hr || reading.bpm || []);
+          const avgSpo2 = avg(reading.spo2 || reading.ir || []);
+          const avgAx = avg(reading.accX || reading.ax || []);
+          const avgAy = avg(reading.accY || reading.ay || []);
+          const avgAz = avg(reading.accZ || reading.az || []);
           
           // Calculate acceleration magnitude
           const accelMagnitude = Math.sqrt(avgAx ** 2 + avgAy ** 2 + avgAz ** 2);
 
           return {
             timestamp: new Date(reading.timestamp).toLocaleTimeString(),
-            heartRate: avgBpm,
-            spo2: avgIR, // Using IR as proxy for SpO2
+            heartRate: avgHR,
+            spo2: avgSpo2,
             accelMagnitude: Math.round(accelMagnitude * 100) / 100,
           };
         })

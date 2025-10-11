@@ -8,7 +8,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     // Redirect to analytics page by default
-    router.push("/");
+    router.push("/dashboard/analytics");
   }, [router]);
 
   return (

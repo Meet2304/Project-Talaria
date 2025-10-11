@@ -9,14 +9,14 @@ import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
-import { Info, Users, LayoutDashboard, Download, Home, Image as ImageIcon, Brain } from "lucide-react";
+import { Info, Users, LayoutDashboard, Download, Home, Image as ImageIcon, Brain, RefreshCw } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 export default function DatabasePage() {
   const router = useRouter();
-  const { data: sensorReadings, loading, error } = useAllSensorData(); // Get ALL readings
+  const { data: sensorReadings, loading, error, lastUpdate, refresh } = useAllSensorData(); // Get ALL readings with refresh
 
   const dockItems = [
     {
@@ -83,20 +83,22 @@ export default function DatabasePage() {
 
   // Calculate database statistics - filter valid readings first
   const validReadings = sensorReadings.filter(
-    (r: SensorReading) => r.bpm && Array.isArray(r.bpm) && r.ir && Array.isArray(r.ir)
+    (r: SensorReading) => (r.hr || r.bpm) && Array.isArray(r.hr || r.bpm) && (r.spo2 || r.ir) && Array.isArray(r.spo2 || r.ir)
   );
 
   const stats = {
     total: sensorReadings.length,
     avgHeartRate: validReadings.length > 0
-      ? Math.round(validReadings.reduce((sum: number, r: SensorReading) => sum + avg(r.bpm), 0) / validReadings.length)
+      ? Math.round(validReadings.reduce((sum: number, r: SensorReading) => sum + avg(r.hr || r.bpm || []), 0) / validReadings.length)
       : 0,
     avgSpo2: validReadings.length > 0
-      ? Math.round((validReadings.reduce((sum: number, r: SensorReading) => sum + avg(r.ir), 0) / validReadings.length) * 10) / 10
+      ? Math.round((validReadings.reduce((sum: number, r: SensorReading) => sum + avg(r.spo2 || r.ir || []), 0) / validReadings.length) * 10) / 10
       : 0,
     timeSpan: sensorReadings.length > 1 && sensorReadings[0] && sensorReadings[sensorReadings.length - 1]
       ? Math.round((sensorReadings[0].timestamp - sensorReadings[sensorReadings.length - 1].timestamp) / 3600000)
       : 0,
+    totalSamples: sensorReadings.reduce((sum: number, r: SensorReading) => sum + (r.n || 0), 0),
+    totalSteps: sensorReadings.reduce((sum: number, r: SensorReading) => sum + (r.steps_in_batch || 0), 0),
   };
 
   return (
@@ -128,23 +130,46 @@ export default function DatabasePage() {
                             Complete sensor readings from Firebase - Real-time updates enabled
                           </CardDescription>
                         </div>
-                        <Button
-                          onClick={exportAsJSON}
-                          disabled={loading || sensorReadings.length === 0}
-                          variant="outline"
-                          size="sm"
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          Export JSON
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={refresh}
+                            disabled={loading}
+                            variant="outline"
+                            size="sm"
+                          >
+                            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                            Refresh
+                          </Button>
+                          <Button
+                            onClick={exportAsJSON}
+                            disabled={loading || sensorReadings.length === 0}
+                            variant="outline"
+                            size="sm"
+                          >
+                            <Download className="h-4 w-4 mr-2" />
+                            Export JSON
+                          </Button>
+                        </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
                         <div className="space-y-1">
                           <p className="text-sm text-muted-foreground">Total Readings</p>
                           <p className="text-2xl font-bold">
                             {loading ? "..." : stats.total.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-sm text-muted-foreground">Total Samples</p>
+                          <p className="text-2xl font-bold">
+                            {loading ? "..." : stats.totalSamples.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-sm text-muted-foreground">Total Steps</p>
+                          <p className="text-2xl font-bold">
+                            {loading ? "..." : stats.totalSteps.toLocaleString()}
                           </p>
                         </div>
                         <div className="space-y-1">
@@ -178,9 +203,7 @@ export default function DatabasePage() {
                               <span className="font-semibold text-foreground">
                                 {loading
                                   ? "..."
-                                  : sensorReadings.length > 0
-                                  ? new Date(sensorReadings[0].timestamp).toLocaleString()
-                                  : "No data"}
+                                  : lastUpdate.toLocaleTimeString()}
                               </span>
                             </span>
                           </div>
