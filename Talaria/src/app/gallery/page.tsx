@@ -5,6 +5,7 @@ import { Dock } from "@/components/ui/dock-two";
 import InteractiveImageBentoGallery from "@/components/bento-gallery";
 import { Home, Info, Users, LayoutDashboard, Image as ImageIcon, Brain } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function GalleryPage() {
   const router = useRouter();
@@ -72,10 +73,9 @@ export default function GalleryPage() {
       </div>
 
       {/* Footer */}
-      <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 text-center text-slate-600 text-xs sm:text-sm relative z-10">
-        <p>Made on Earth, by Humans</p>
-        <p>&copy; 2025 Talaria. All rights reserved.</p>
-      </footer>
+      <div className="relative z-10 pb-20">
+        <MinimalFooter />
+      </div>
     </div>
   );
 }

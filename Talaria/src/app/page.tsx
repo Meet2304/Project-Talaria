@@ -9,6 +9,7 @@ import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
 import Link from "next/link";
 import Image from "next/image";
+import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function Home() {
   const router = useRouter();
@@ -150,7 +151,7 @@ export default function Home() {
         <div className="mx-auto grid gap-4 lg:grid-cols-2">
           {/* Heart Rate Monitoring */}
           <FeatureCard>
-            <div className="p-4 sm:p-6">
+            <div className="p-4">
               <span className="text-slate-600 flex items-center gap-2 text-sm sm:text-base">
             <Heart className="size-4" />
             Heart Rate Monitoring
@@ -158,13 +159,13 @@ export default function Home() {
               <p className="mt-4 sm:mt-8 text-xl sm:text-2xl font-semibold">Real-time cardiovascular tracking with MAX30102 sensor</p>
             </div>
 
-            <div className="relative border-t border-dashed">
+            <div className="relative border-t border-dashed overflow-hidden">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
               <div className="aspect-square relative">
                 <Image
                   src="/images/features/Heart Rate.png"
                   fill
-                  className="object-contain p-4"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
                   alt="Heart rate monitoring visualization"
                 />
               </div>
@@ -173,7 +174,7 @@ export default function Home() {
 
           {/* SpO2 Monitoring */}
           <FeatureCard>
-            <div className="p-4 sm:p-6">
+            <div className="p-4">
               <span className="text-slate-600 flex items-center gap-2 text-sm sm:text-base">
             <Activity className="size-4" />
             SpO2 Monitoring
@@ -182,13 +183,13 @@ export default function Home() {
             </div>
 
             
-            <div className="relative border-t border-dashed">
+            <div className="relative border-t border-dashed overflow-hidden">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
               <div className="aspect-square relative">
             <Image
               src="/images/features/SpO2.png"
               fill
-              className="object-contain p-4"
+              className="object-contain transition-transform duration-500 group-hover:scale-110"
               alt="SpO2 monitoring visualization"
             />
               </div>
@@ -197,7 +198,7 @@ export default function Home() {
 
           {/* Gait Analysis */}
           <FeatureCard>
-            <div className="p-4 sm:p-6">
+            <div className="p-4">
               <span className="text-slate-600 flex items-center gap-2 text-sm sm:text-base">
             <Footprints className="size-4" />
             Gait Analysis
@@ -205,13 +206,13 @@ export default function Home() {
               <p className="mt-4 sm:mt-8 text-xl sm:text-2xl font-semibold">Precise movement tracking with MPU6050 accelerometer</p>
             </div>
 
-            <div className="relative border-t border-dashed">
+            <div className="relative border-t border-dashed overflow-hidden">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
               <div className="aspect-square relative">
             <Image
               src="/images/features/Gait Analysis.png"
               fill
-              className="object-contain p-4"
+              className="object-contain transition-transform duration-500 group-hover:scale-110"
               alt="Gait analysis visualization"
             />
               </div>
@@ -220,7 +221,7 @@ export default function Home() {
 
           {/* Live Analytics */}
           <FeatureCard>
-            <div className="p-4 sm:p-6">
+            <div className="p-4">
               <span className="text-slate-600 flex items-center gap-2 text-sm sm:text-base">
             <TrendingUp className="size-4" />
             Live Analytics
@@ -228,13 +229,13 @@ export default function Home() {
               <p className="mt-4 sm:mt-8 text-xl sm:text-2xl font-semibold">Real-time data visualization and comprehensive insights</p>
             </div>
 
-            <div className="relative border-t border-dashed">
+            <div className="relative border-t border-dashed overflow-hidden">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_75%,hsl(var(--muted)),white_125%)]"></div>
               <div className="aspect-square relative">
             <Image
               src="/images/features/Data Analytics.png"
               fill
-              className="object-contain p-4"
+              className="object-contain transition-transform duration-500 group-hover:scale-110"
               alt="Live analytics dashboard visualization"
             />
               </div>
@@ -300,10 +301,9 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 text-center text-slate-600 text-xs sm:text-sm relative z-10">
-        <p>Made on Earth, by Humans</p>
-        <p>&copy; 2025 Talaria. All rights reserved.</p>
-      </footer>
+      <div className="relative z-10 pb-20">
+        <MinimalFooter />
+      </div>
     </div>
   );
 }

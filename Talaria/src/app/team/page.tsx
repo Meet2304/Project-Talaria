@@ -6,6 +6,7 @@ import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
 import { Button } from "@/components/ui/button";
 import TeamSection from "@/components/team";
+import { MinimalFooter } from "@/components/minimal-footer";
 
 export default function TeamPage() {
   const router = useRouter();
@@ -89,6 +90,11 @@ export default function TeamPage() {
 
         {/* Team Section Component */}
         <TeamSection />
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10 pb-20">
+        <MinimalFooter />
       </div>
     </div>
   );
