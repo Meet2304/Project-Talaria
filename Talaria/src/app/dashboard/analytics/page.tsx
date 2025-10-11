@@ -10,8 +10,6 @@ import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
 import { Info, Users, LayoutDashboard, Home, Image as ImageIcon, Brain } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ML_MODELS, formatMetric, formatSamples, getColorClasses } from "@/lib/ml-models-config";
 
 export default function AnalyticsPage() {
   const router = useRouter();
@@ -99,64 +97,6 @@ export default function AnalyticsPage() {
                   {/* Primary Chart */}
                   <div className="lg:col-span-2">
                     <ChartAreaInteractive />
-                  </div>
-
-                  {/* ML Models Section */}
-                  <div className="lg:col-span-2">
-                    <Card>
-                      <CardHeader className="p-4 sm:p-6">
-                        <CardTitle className="text-lg sm:text-xl">ML Model Performance</CardTitle>
-                        <CardDescription className="text-sm">Real-time status and metrics of deployed models</CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-4 sm:p-6">
-                        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                          {ML_MODELS.map((model) => {
-                            const Icon = model.icon;
-                            const colors = getColorClasses(model.color);
-                            
-                            return (
-                              <div key={model.id} className="border border-slate-200 p-3 sm:p-4 hover:border-slate-300 transition-colors">
-                                {/* Model Header */}
-                                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                                  <div className={`p-1.5 sm:p-2 ${colors.bg} border ${colors.border}`}>
-                                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${colors.icon}`} />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2">
-                                      <h3 className="font-semibold text-slate-900 text-xs sm:text-sm truncate">{model.name}</h3>
-                                      <Badge 
-                                        variant={model.status === "connected" ? "default" : "secondary"}
-                                        className="text-xs h-5 flex-shrink-0"
-                                      >
-                                        {model.status === "connected" ? "Active" : "Inactive"}
-                                      </Badge>
-                                    </div>
-                                    <p className="text-xs text-slate-500 truncate">{model.type}</p>
-                                  </div>
-                                </div>
-
-                                {/* Metrics */}
-                                <div className="grid grid-cols-2 gap-2 mb-3">
-                                  <div className="bg-slate-50 p-2">
-                                    <div className="text-xs text-slate-500">Accuracy</div>
-                                    <div className="text-sm font-bold text-slate-900">{formatMetric(model.metrics.accuracy)}</div>
-                                  </div>
-                                  <div className="bg-slate-50 p-2">
-                                    <div className="text-xs text-slate-500">F1 Score</div>
-                                    <div className="text-sm font-bold text-slate-900">{formatMetric(model.metrics.f1Score)}</div>
-                                  </div>
-                                </div>
-
-                                {/* Dataset */}
-                                <div className="text-xs text-slate-600 bg-slate-50 p-2">
-                                  <span className="font-semibold">{formatSamples(model.dataset.samples)}</span> training samples
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </CardContent>
-                    </Card>
                   </div>
 
                   {/* Additional Chart Placeholders */}

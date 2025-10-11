@@ -1,6 +1,6 @@
 /**
  * @file Modified-Smart-Shoe-Firebase.ino
- * @brief ESP32-S3 firmware with advanced MPU6050/MAX30105 sensor fusion and Firebase updates.
+ * @brief ESP32-S3 firmware with advanced MPU6050/MAX30105 sensor fusion, per-batch step counting, and Firebase updates.
  * @author Meet Bhatt
  * @date 2025-10-11
  */
@@ -45,7 +45,7 @@ unsigned long tokenExpiryMs = 0;
 
 // ----------------------- Buffer settings -----------------------
 #define BATCH_SIZE 50
-#define UPLOAD_INTERVAL_MS 10000UL
+#define UPLOAD_INTERVAL_MS 20000UL // Increased to allow buffer to fill
 #define SAMPLE_INTERVAL_MS 100UL
 int batchCount = 0;
 unsigned long lastUploadTime = 0;
@@ -62,7 +62,7 @@ uint32_t ir_buf[BATCH_SIZE], red_buf[BATCH_SIZE];
 float temp_c_buf[BATCH_SIZE];
 
 
-// ----------------------- MPU -----------------------
+// ----------------------- MPU & Step Counting -----------------------
 float accX_offset = 0, accY_offset = 0, accZ_offset = 0;
 float gyroX_offset = 0, gyroY_offset = 0, gyroZ_offset = 0;
 unsigned long mpu_lastTime;
@@ -72,6 +72,7 @@ float gyroX, gyroY, gyroZ;
 float accelRoll, accelPitch;
 float gyroRoll = 0, gyroPitch = 0, gyroYaw = 0;
 float combRoll = 0, combPitch = 0;
+#define STEP_THRESHOLD 1.8  // Acceleration magnitude threshold for a step
 
 // ----------------------- MAX30105 (for SpO2/HR) -----------------------
 #define MAX_BUFFER_LENGTH 100 // Must be 100 for the spo2_algorithm
@@ -79,10 +80,10 @@ uint32_t irBuffer[MAX_BUFFER_LENGTH];
 uint32_t redBuffer[MAX_BUFFER_LENGTH];
 int max_buffer_idx = 0;
 
-int32_t spo2;
-int8_t validSPO2;
-int32_t heartRate;
-int8_t validHeartRate;
+int32_t spo2 = 0;
+int8_t validSPO2 = 0;
+int32_t heartRate = 0;
+int8_t validHeartRate = 0;
 uint32_t irValue, redValue;
 float temperature;
 
@@ -91,6 +92,7 @@ bool connectWiFi();
 bool doAnonymousSignup();
 bool refreshIdToken();
 bool ensureValidIdToken();
+int countStepsInBatch();
 bool uploadCurrentBatch();
 void appendCurrentSampleToBuffer();
 void clearBuffer();
@@ -138,6 +140,7 @@ void setup() {
   updateMPUData();
   combRoll = accelRoll;
   combPitch = accelPitch;
+  mpu_lastTime = millis(); // Reset timer after init read
 
   Serial.println("Initializing MAX30105 (SpO2/HR Sensor)...");
   I2C_MAX.begin(MAX_SDA_PIN, MAX_SCL_PIN);
@@ -261,22 +264,64 @@ void appendCurrentSampleToBuffer() {
   aroll_buf[batchCount] = accelRoll; apitch_buf[batchCount] = accelPitch;
   groll_buf[batchCount] = gyroRoll; gpitch_buf[batchCount] = gyroPitch; gyaw_buf[batchCount] = gyroYaw;
   combroll_buf[batchCount] = combRoll; combpitch_buf[batchCount] = combPitch;
-  hr_buf[batchCount] = heartRate; hr_valid_buf[batchCount] = validHeartRate;
-  spo2_buf[batchCount] = spo2; spo2_valid_buf[batchCount] = validSPO2;
+  
+  // Only store valid HR/SpO2 readings. Store 0 if invalid to avoid sending -999.
+  if (validHeartRate == 1) {
+    hr_buf[batchCount] = heartRate;
+  } else {
+    hr_buf[batchCount] = 0;
+  }
+  hr_valid_buf[batchCount] = validHeartRate;
+
+  if (validSPO2 == 1) {
+    spo2_buf[batchCount] = spo2;
+  } else {
+    spo2_buf[batchCount] = 0;
+  }
+  spo2_valid_buf[batchCount] = validSPO2;
+  
   ir_buf[batchCount] = irValue; red_buf[batchCount] = redValue;
   temp_c_buf[batchCount] = temperature;
 
   batchCount++;
 }
 
+/**
+ * @brief Analyzes the accelerometer data in the current batch to count footsteps.
+ * @return The number of steps detected in the batch.
+ */
+int countStepsInBatch() {
+  int steps = 0;
+  int lastStepIndex = -100; // Used for debouncing, initialized to a safe value
+  // Debounce: 250ms / 100ms sample interval = 2.5. Round up to 3 samples.
+  const int STEP_DEBOUNCE_SAMPLES = 3; 
+
+  for (int i = 0; i < batchCount; i++) {
+    // Calculate the magnitude of the acceleration vector for the current sample
+    float accMagnitude = sqrt(ax_buf[i]*ax_buf[i] + ay_buf[i]*ay_buf[i] + az_buf[i]*az_buf[i]);
+    
+    // Check if magnitude crosses the threshold and if enough time (samples) has passed since the last step
+    if (accMagnitude > STEP_THRESHOLD && (i - lastStepIndex) > STEP_DEBOUNCE_SAMPLES) {
+      steps++;
+      lastStepIndex = i; // Record the index of this step
+    }
+  }
+  return steps;
+}
+
 bool uploadCurrentBatch() {
   if (!ensureValidIdToken()) return false;
+
+  // Analyze the buffered data to get the step count for this specific batch
+  int stepsInThisBatch = countStepsInBatch();
+  Serial.printf("Batch ready. Steps in this batch: %d\n", stepsInThisBatch);
 
   DynamicJsonDocument doc(32768);
   doc["device_id"] = localId.length() ? localId : "esp32-unknown";
   doc["n"] = batchCount;
   doc["client_ts_ms"] = millis();
   doc["sample_rate_ms"] = SAMPLE_INTERVAL_MS;
+  doc["steps_in_batch"] = stepsInThisBatch; // Add the new per-batch step count
   JsonObject ts = doc.createNestedObject("ts"); ts[".sv"] = "timestamp";
 
   JsonArray ax = doc.createNestedArray("accX"); JsonArray ay = doc.createNestedArray("accY"); JsonArray az = doc.createNestedArray("accZ");
@@ -391,9 +436,9 @@ bool refreshIdToken() {
 
 // ----------------------- Utility -----------------------
 void printCombinedData() {
-  Serial.printf("MPU -> C.Roll: %.1f C.Pitch: %.1f || MAX -> HR: %ld(V:%d) SpO2: %ld(V:%d) Temp: %.1fC || Buffer: %d/%d\n",
+  Serial.printf("MPU -> C.Roll: %.1f C.Pitch: %.1f || MAX -> HR: %ld(V:%d) SpO2: %ld(V:%d) || Buffer: %d/%d\n",
                 combRoll, combPitch,
-                heartRate, validHeartRate, spo2, validSPO2, temperature,
+                heartRate, validHeartRate, spo2, validSPO2,
                 batchCount, BATCH_SIZE);
 }
 

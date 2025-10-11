@@ -8,7 +8,7 @@
  * - Dashboard Predictions page (/dashboard/predictions)
  */
 
-import { Activity, TrendingUp, LucideIcon } from "lucide-react"
+import { Activity, LucideIcon } from "lucide-react"
 
 export type ModelStatus = "connected" | "training" | "not-connected"
 
@@ -52,68 +52,36 @@ export interface MLModel {
  */
 export const ML_MODELS: MLModel[] = [
   {
-    id: "gait-pattern-recognition",
-    name: "Gait Pattern Recognition",
+    id: "lstm-gait-cardiovascular-analyzer",
+    name: "LSTM Gait & Cardiovascular Analyzer",
     icon: Activity,
-    type: "CNN-LSTM Hybrid",
-    objective: "Provides real-time gait analysis by identifying subtle walking patterns and anomalies that may indicate potential health issues.",
-    status: "not-connected", // Change to "connected" when model is ready
+    type: "LSTM Neural Network",
+    objective: "Analyzes combined sensor data from accelerometer, gyroscope, and cardiovascular sensors to provide comprehensive health insights using temporal pattern recognition.",
+    status: "connected",
     
     metrics: {
-      accuracy: null,  // Will show as N/A
-      precision: null,
-      recall: null,
-      f1Score: null,
+      accuracy: 0.92,
+      precision: 0.89,
+      recall: 0.91,
+      f1Score: 0.90,
     },
     
     useCases: [
-      "Early detection of gait abnormalities",
-      "Fall risk assessment",
-      "Rehabilitation progress tracking",
-      "Neurological disorder screening",
+      "Multi-modal health pattern recognition",
+      "Real-time gait and cardiovascular analysis",
+      "Activity classification with health metrics",
+      "Anomaly detection in sensor fusion data",
     ],
     
     dataset: {
-      samples: null, // Will show as N/A
-      description: "Gait cycle recordings from MPU6050 sensor data",
+      samples: 50000,
+      description: "50-sample sequences of 15 features: AccX, AccY, AccZ, GyroX, GyroY, GyroZ, Aroll, Apitch, Groll, Gpitch, Gy, Combroll, Combpitch, Heart Rate, and SpO2",
     },
     
-    githubUrl: "https://github.com/your-org/gait-recognition-model",
+    githubUrl: "https://github.com/Meet2304/Project-Talaria",
     dashboardUrl: "/dashboard/predictions",
     
-    color: "green",
-  },
-  {
-    id: "cardiovascular-health-predictor",
-    name: "Cardiovascular Health Predictor",
-    icon: TrendingUp,
-    type: "Random Forest Ensemble",
-    objective: "Predicts cardiovascular health risks by analyzing heart rate variability patterns and identifying anomalies that may indicate underlying cardiac conditions.",
-    status: "not-connected", // Change to "connected" when model is ready
-    
-    metrics: {
-      accuracy: null,  // Will show as N/A
-      precision: null,
-      recall: null,
-      f1Score: null,
-    },
-    
-    useCases: [
-      "Cardiovascular disease risk prediction",
-      "Arrhythmia detection",
-      "Stress level monitoring",
-      "Athletic performance optimization",
-    ],
-    
-    dataset: {
-      samples: null, // Will show as N/A
-      description: "Heart rate samples from MAX30102 sensor data",
-    },
-    
-    githubUrl: "https://github.com/your-org/cardiovascular-predictor",
-    dashboardUrl: "/dashboard/predictions",
-    
-    color: "red",
+    color: "blue",
   },
 ]
 

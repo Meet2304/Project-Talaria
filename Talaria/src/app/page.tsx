@@ -54,7 +54,7 @@ export default function Home() {
       icon: LayoutDashboard,
       label: "Dashboard",
       onClick: () => {
-        router.push("/dashboard");
+        router.push("/dashboard/analytics");
       },
     },
   ];

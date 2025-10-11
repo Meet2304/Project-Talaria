@@ -139,23 +139,41 @@ export function SensorDataDetailedTable({ data, loading, itemsPerPage = 10 }: Se
               <TableRow>
                 <TableHead className="w-[50px]">Expand</TableHead>
                 <TableHead className="w-[50px]">#</TableHead>
-                <TableHead>Reading Timestamp</TableHead>
-                <TableHead className="text-center">Sample #</TableHead>
-                <TableHead className="text-center">Heart Rate</TableHead>
-                <TableHead className="text-center">IR</TableHead>
-                <TableHead className="text-center">Accel X</TableHead>
-                <TableHead className="text-center">Accel Y</TableHead>
-                <TableHead className="text-center">Accel Z</TableHead>
-                <TableHead className="text-center">Gyro X</TableHead>
-                <TableHead className="text-center">Gyro Y</TableHead>
-                <TableHead className="text-center">Gyro Z</TableHead>
+                <TableHead>Timestamp</TableHead>
+                <TableHead className="text-center">Samples</TableHead>
+                <TableHead className="text-center">Steps</TableHead>
+                <TableHead className="text-center">HR</TableHead>
+                <TableHead className="text-center">SpO2</TableHead>
+                <TableHead className="text-center">Temp (°C)</TableHead>
+                <TableHead className="text-center">Accel X/Y/Z</TableHead>
+                <TableHead className="text-center">Gyro X/Y/Z</TableHead>
+                <TableHead className="text-center">Pitch</TableHead>
+                <TableHead className="text-center">Roll</TableHead>
+                <TableHead className="text-center">Yaw</TableHead>
+                <TableHead className="text-center">IR/Red</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentData.map((reading, readingIndex) => {
                 const globalIndex = startIndex + readingIndex + 1;
                 const isExpanded = expandedReadings.has(reading.id);
-                const sampleCount = reading.n || 50;
+                const sampleCount = reading.n || 17;
+
+                // Get data arrays with fallbacks for backward compatibility
+                const accX = reading.accX || reading.ax || [];
+                const accY = reading.accY || reading.ay || [];
+                const accZ = reading.accZ || reading.az || [];
+                const gyroX = reading.gyroX || reading.gx || [];
+                const gyroY = reading.gyroY || reading.gy || [];
+                const gyroZ = reading.gyroZ || reading.gz || [];
+                const hr = reading.hr || reading.bpm || [];
+                const spo2 = reading.spo2 || [];
+                const temp = reading.temp_c || [];
+                const ir = reading.ir || [];
+                const red = reading.red || [];
+                const combpitch = reading.combpitch || reading.apitch || [];
+                const combroll = reading.combroll || reading.aroll || [];
+                const gyaw = reading.gyaw || [];
 
                 return (
                   <Fragment key={reading.id}>
@@ -182,54 +200,94 @@ export function SensorDataDetailedTable({ data, loading, itemsPerPage = 10 }: Se
                       <TableCell className="text-center">
                         <Badge variant="secondary">{sampleCount} samples</Badge>
                       </TableCell>
-                      <TableCell colSpan={8} className="text-center text-muted-foreground text-xs">
-                        Click expand to see all {sampleCount} samples
+                      <TableCell className="text-center">
+                        {reading.steps_in_batch !== undefined && (
+                          <Badge variant="outline" className="bg-green-50 text-green-700">
+                            {reading.steps_in_batch} steps
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell colSpan={9} className="text-center text-muted-foreground text-xs">
+                        Click expand to see all {sampleCount} samples with detailed sensor data
                       </TableCell>
                     </TableRow>
 
-                    {/* Expanded Detail Rows - Show all 50 samples */}
-                    {isExpanded && reading.ax && reading.ax.length > 0 && (
+                    {/* Expanded Detail Rows - Show all samples */}
+                    {isExpanded && accX.length > 0 && (
                       <>
                         {Array.from({ length: sampleCount }).map((_, sampleIndex) => (
                           <TableRow key={`${reading.id}-${sampleIndex}`} className="text-xs">
                             <TableCell></TableCell>
                             <TableCell className="text-muted-foreground"></TableCell>
                             <TableCell className="text-muted-foreground text-xs">
-                              {sampleIndex === 0 && `${reading.client_ts_ms}ms`}
+                              {sampleIndex === 0 && `+${reading.client_ts_ms}ms`}
                             </TableCell>
                             <TableCell className="text-center font-mono">
                               {sampleIndex + 1}
                             </TableCell>
+                            <TableCell className="text-center text-muted-foreground text-xs">
+                              {sampleIndex === 0 && reading.steps_in_batch !== undefined && `${reading.steps_in_batch}`}
+                            </TableCell>
+                            {/* Heart Rate */}
                             <TableCell className="text-center">
-                              <Badge 
-                                variant="outline" 
-                                className={reading.bpm[sampleIndex] > 0 ? "bg-red-50" : "bg-gray-50"}
-                              >
-                                {reading.bpm[sampleIndex]} BPM
-                              </Badge>
+                              {hr[sampleIndex] !== undefined && (
+                                <Badge 
+                                  variant="outline" 
+                                  className={hr[sampleIndex] > 0 ? "bg-red-50 text-red-700" : "bg-gray-50"}
+                                >
+                                  {hr[sampleIndex]} {reading.hr_valid && reading.hr_valid[sampleIndex] ? "✓" : ""}
+                                </Badge>
+                              )}
                             </TableCell>
+                            {/* SpO2 */}
                             <TableCell className="text-center">
-                              <Badge variant="outline" className="bg-blue-50">
-                                {reading.ir[sampleIndex]}
-                              </Badge>
+                              {spo2[sampleIndex] !== undefined && spo2[sampleIndex] !== -999 && (
+                                <Badge 
+                                  variant="outline" 
+                                  className={spo2[sampleIndex] > 0 ? "bg-blue-50 text-blue-700" : "bg-gray-50"}
+                                >
+                                  {spo2[sampleIndex]}% {reading.spo2_valid && reading.spo2_valid[sampleIndex] ? "✓" : ""}
+                                </Badge>
+                              )}
                             </TableCell>
-                            <TableCell className="text-center font-mono">
-                              {reading.ax[sampleIndex].toFixed(6)}
+                            {/* Temperature */}
+                            <TableCell className="text-center font-mono text-xs">
+                              {temp[sampleIndex] !== undefined && temp[sampleIndex].toFixed(2)}
                             </TableCell>
-                            <TableCell className="text-center font-mono">
-                              {reading.ay[sampleIndex].toFixed(6)}
+                            {/* Accelerometer */}
+                            <TableCell className="text-center font-mono text-xs">
+                              <div className="space-y-1">
+                                <div>X: {accX[sampleIndex]?.toFixed(3)}</div>
+                                <div>Y: {accY[sampleIndex]?.toFixed(3)}</div>
+                                <div>Z: {accZ[sampleIndex]?.toFixed(3)}</div>
+                              </div>
                             </TableCell>
-                            <TableCell className="text-center font-mono">
-                              {reading.az[sampleIndex].toFixed(6)}
+                            {/* Gyroscope */}
+                            <TableCell className="text-center font-mono text-xs">
+                              <div className="space-y-1">
+                                <div>X: {gyroX[sampleIndex]?.toFixed(3)}</div>
+                                <div>Y: {gyroY[sampleIndex]?.toFixed(3)}</div>
+                                <div>Z: {gyroZ[sampleIndex]?.toFixed(3)}</div>
+                              </div>
                             </TableCell>
-                            <TableCell className="text-center font-mono">
-                              {reading.gx[sampleIndex].toFixed(6)}
+                            {/* Pitch */}
+                            <TableCell className="text-center font-mono text-xs">
+                              {combpitch[sampleIndex]?.toFixed(2)}°
                             </TableCell>
-                            <TableCell className="text-center font-mono">
-                              {reading.gy[sampleIndex].toFixed(6)}
+                            {/* Roll */}
+                            <TableCell className="text-center font-mono text-xs">
+                              {combroll[sampleIndex]?.toFixed(2)}°
                             </TableCell>
-                            <TableCell className="text-center font-mono">
-                              {reading.gz[sampleIndex].toFixed(6)}
+                            {/* Yaw */}
+                            <TableCell className="text-center font-mono text-xs">
+                              {gyaw[sampleIndex]?.toFixed(2)}°
+                            </TableCell>
+                            {/* IR/Red */}
+                            <TableCell className="text-center font-mono text-xs">
+                              <div className="space-y-1">
+                                <div className="text-red-600">R: {red[sampleIndex]}</div>
+                                <div className="text-gray-600">IR: {ir[sampleIndex]}</div>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
