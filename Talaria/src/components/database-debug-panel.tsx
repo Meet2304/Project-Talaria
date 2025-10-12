@@ -7,6 +7,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, XCircle, Clock, Database } from "lucide-react";
 
+// Debug logger that only runs in development
+const debug = (...args: any[]) => {
+  if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line no-console
+    console.log(...args);
+  }
+};
+
 export function DatabaseDebugPanel() {
   const [connected, setConnected] = useState<boolean | null>(null);
   const [deviceCount, setDeviceCount] = useState(0);
@@ -16,24 +24,24 @@ export function DatabaseDebugPanel() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("🔍 Database Debug Panel - Starting diagnostics...");
-    console.log("📡 Database URL:", database.app.options.databaseURL);
+    debug("🔍 Database Debug Panel - Starting diagnostics...");
+    debug("📡 Database URL:", database.app.options.databaseURL);
 
     const rootRef = ref(database, '/');
     
     const unsubscribe = onValue(
       rootRef,
       (snapshot) => {
-        console.log("✅ Firebase connection successful!");
-        console.log("📊 Data exists:", snapshot.exists());
+        debug("✅ Firebase connection successful!");
+        debug("📊 Data exists:", snapshot.exists());
         
         if (snapshot.exists()) {
           setConnected(true);
           const data = snapshot.val();
           const rootKeys = Object.keys(data);
           
-          console.log("🔌 Root level keys:", rootKeys);
-          console.log("📦 Full data structure:", JSON.stringify(data).substring(0, 500) + "...");
+          debug("🔌 Root level keys:", rootKeys);
+          debug("📦 Full data structure:", JSON.stringify(data).substring(0, 500) + "...");
           
           let allDeviceIds: string[] = [];
           let totalCount = 0;
@@ -41,9 +49,9 @@ export function DatabaseDebugPanel() {
           
           // Check if we have a 'devices' parent key
           if (data.devices && typeof data.devices === 'object') {
-            console.log("📂 Found 'devices' parent key");
+            debug("📂 Found 'devices' parent key");
             const deviceIds = Object.keys(data.devices);
-            console.log("🔌 Device IDs under 'devices':", deviceIds);
+            debug("🔌 Device IDs under 'devices':", deviceIds);
             allDeviceIds = deviceIds;
             
             deviceIds.forEach(deviceId => {
@@ -51,7 +59,7 @@ export function DatabaseDebugPanel() {
               if (device.readings) {
                 const readingCount = Object.keys(device.readings).length;
                 totalCount += readingCount;
-                console.log(`  📱 Device ${deviceId}: ${readingCount} readings`);
+                debug(`  📱 Device ${deviceId}: ${readingCount} readings`);
                 
                 // Find latest timestamp
                 Object.values(device.readings).forEach((reading: any) => {
@@ -64,14 +72,14 @@ export function DatabaseDebugPanel() {
             });
           } else {
             // Direct device IDs at root level
-            console.log("📂 Direct device structure (no 'devices' parent)");
+            debug("📂 Direct device structure (no 'devices' parent)");
             rootKeys.forEach(deviceId => {
               const device = data[deviceId];
               if (device && typeof device === 'object' && device.readings) {
                 allDeviceIds.push(deviceId);
                 const readingCount = Object.keys(device.readings).length;
                 totalCount += readingCount;
-                console.log(`  📱 Device ${deviceId}: ${readingCount} readings`);
+                debug(`  📱 Device ${deviceId}: ${readingCount} readings`);
                 
                 // Find latest timestamp
                 Object.values(device.readings).forEach((reading: any) => {
@@ -87,8 +95,8 @@ export function DatabaseDebugPanel() {
           setTotalReadings(totalCount);
           setLatestTimestamp(latestTs);
           
-          console.log("📈 Total readings across all devices:", totalCount);
-          console.log("⏰ Latest timestamp:", new Date(latestTs).toLocaleString());
+          debug("📈 Total readings across all devices:", totalCount);
+          debug("⏰ Latest timestamp:", new Date(latestTs).toLocaleString());
           
         } else {
           console.warn("⚠️ Database is empty!");
@@ -105,7 +113,7 @@ export function DatabaseDebugPanel() {
     );
 
     return () => {
-      console.log("🔌 Disconnecting debug listener");
+      debug("🔌 Disconnecting debug listener");
       unsubscribe();
     };
   }, []);
