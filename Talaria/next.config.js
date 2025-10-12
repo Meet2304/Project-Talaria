@@ -18,6 +18,7 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     domains: [],
     minimumCacheTTL: 60,
+    unoptimized: false,
   },
 
   // Performance optimizations
@@ -36,7 +37,23 @@ const nextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+    webVitalsAttribution: ['CLS', 'LCP'],
+  },
+
+  // Webpack optimizations
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Reduce bundle size by ignoring server-only modules
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    
+    return config;
   },
 
   // Headers for better caching

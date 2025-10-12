@@ -72,7 +72,13 @@ export function MinimalFooter() {
 	
 	return (
 		<footer className="relative">
-			<div className="bg-[radial-gradient(35%_80%_at_30%_0%,hsl(var(--foreground)/.1),transparent)] mx-auto max-w-7xl md:border-x md:border-slate-700">
+			{/* Extended vertical lines that go to the bottom */}
+			<div className="absolute inset-0 mx-auto max-w-7xl pointer-events-none hidden md:block">
+				<div className="absolute left-0 top-0 bottom-0 w-px bg-slate-700" />
+				<div className="absolute right-0 top-0 bottom-0 w-px bg-slate-700" />
+			</div>
+			
+			<div className="bg-[radial-gradient(35%_80%_at_30%_0%,hsl(var(--foreground)/.1),transparent)] mx-auto max-w-7xl relative">
 				<div className="bg absolute inset-x-0 h-px w-full" />
 				<div className="grid max-w-7xl grid-cols-6 gap-6 p-6 px-4 sm:px-6 lg:px-8 ">
 					<div className="col-span-6 flex flex-col gap-5 md:col-span-3">
