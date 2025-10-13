@@ -167,19 +167,19 @@ export default function AboutPage() {
                   quarter: "2",
                   title: "Cloud Platform",
                   description: "Firebase real-time database & web dashboard",
-                  status: "in-progress"
+                  status: "done"
                 },
                 {
                   quarter: "3",
                   title: "ML Analytics",
                   description: "Machine learning models for gait pattern analysis",
-                  status: "upcoming"
+                  status: "done"
                 },
                 {
                   quarter: "4",
                   title: "Mobile App",
                   description: "Cross-platform mobile application release",
-                  status: "upcoming"
+                  status: "done"
                 }
               ]}
             />
