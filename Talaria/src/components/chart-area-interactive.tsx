@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
@@ -124,10 +124,10 @@ export function ChartAreaInteractive() {
             <SelectTrigger className="w-32" aria-label="Select metric">
               <SelectValue placeholder="Metric" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="heartRate" className="rounded-lg">Heart Rate</SelectItem>
-              <SelectItem value="spo2" className="rounded-lg">SpO2</SelectItem>
-              <SelectItem value="steps" className="rounded-lg">Steps</SelectItem>
+            <SelectContent className="">
+              <SelectItem value="heartRate" className="">Heart Rate</SelectItem>
+              <SelectItem value="spo2" className="">SpO2</SelectItem>
+              <SelectItem value="steps" className="">Steps</SelectItem>
             </SelectContent>
           </Select>
           <ToggleGroup type="single" value={timeRange} onValueChange={setTimeRange} variant="outline" className="@[767px]/card:flex hidden">
@@ -140,11 +140,11 @@ export function ChartAreaInteractive() {
             <SelectTrigger className="@[767px]/card:hidden flex w-32" aria-label="Select a value">
               <SelectValue placeholder="Last 7 Hours" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="1h" className="rounded-lg">Last Hour</SelectItem>
-              <SelectItem value="7h" className="rounded-lg">Last 7 Hours</SelectItem>
-              <SelectItem value="7d" className="rounded-lg">Last 7 Days</SelectItem>
-              <SelectItem value="30d" className="rounded-lg">Last 30 Days</SelectItem>
+            <SelectContent className="">
+              <SelectItem value="1h" className="">Last Hour</SelectItem>
+              <SelectItem value="7h" className="">Last 7 Hours</SelectItem>
+              <SelectItem value="7d" className="">Last 7 Days</SelectItem>
+              <SelectItem value="30d" className="">Last 30 Days</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -203,3 +203,4 @@ export function ChartAreaInteractive() {
     </Card>
   )
 }
+

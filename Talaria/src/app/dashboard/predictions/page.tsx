@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRouter } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar"
@@ -8,7 +8,7 @@ import { WaveBackground } from "@/components/wave-1";
 import { Dock } from "@/components/ui/dock-two";
 import { Info, Users, LayoutDashboard, Home, Image as ImageIcon, Brain } from "lucide-react";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MLInferenceInterface } from "@/components/ml-inference-interface";
+import { VertexAIInferenceInterface } from "@/components/vertex-ai-inference-interface";
 
 export default function PredictionsPage() {
   const router = useRouter();
@@ -74,15 +74,15 @@ export default function PredictionsPage() {
                 <div className="px-4 lg:px-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-2xl">AI-Powered Predictions</CardTitle>
+                      <CardTitle className="text-2xl">AI-Powered Gait Analysis</CardTitle>
                       <CardDescription>
-                        Run inference on the LSTM model using 50 samples of sensor data
+                        Run inference on the LSTM model deployed to Google Cloud Vertex AI using 50 samples of sensor data
                       </CardDescription>
                     </CardHeader>
                   </Card>
                 </div>
                 <div className="px-4 lg:px-6">
-                  <MLInferenceInterface />
+                  <VertexAIInferenceInterface />
                 </div>
               </div>
             </div>

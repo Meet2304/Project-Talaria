@@ -112,7 +112,7 @@ export default function Home() {
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4">
                   The Legend of Talaria
                 </h2>
-                <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-slate-600 mx-auto rounded-full"></div>
+                <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-slate-600 mx-auto "></div>
               </div>
               
               <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-6 border-l-4 border-blue-500">
@@ -145,7 +145,7 @@ export default function Home() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4">
             Features
           </h2>
-          <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-slate-600 mx-auto rounded-full"></div>
+          <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-slate-600 mx-auto "></div>
         </div>
 
         <div className="mx-auto grid gap-4 lg:grid-cols-2">
@@ -307,3 +307,4 @@ export default function Home() {
     </div>
   );
 }
+

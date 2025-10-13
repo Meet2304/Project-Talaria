@@ -96,7 +96,7 @@ export function SensorDataTable({ data, loading, itemsPerPage = 20 }: SensorData
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border">
+        <div className=" border">
           <Table>
             <TableHeader>
               <TableRow>
@@ -197,3 +197,4 @@ export function SensorDataTable({ data, loading, itemsPerPage = 20 }: SensorData
     </Card>
   );
 }
+

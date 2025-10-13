@@ -22,3 +22,4 @@ const CardDecorator = () => (
         <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2"></span>
     </>
 )
+

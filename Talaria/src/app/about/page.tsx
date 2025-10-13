@@ -186,12 +186,41 @@ export default function AboutPage() {
           </CardContent>
         </FeatureCard>
 
+        {/* Interactive Circuit Diagram */}
+        <FeatureCard className="mb-12">
+          <CardContent className="p-8 md:p-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Interactive Circuit Diagram</h2>
+            <p className="text-slate-600 mb-6">
+              Explore the complete circuit design for the Talaria system. This interactive diagram shows how all components are connected together.
+            </p>
+            <div style={{ position: 'relative', width: '100%', paddingTop: 'calc(max(56.25%, 400px))' }}>
+              <iframe 
+                src="https://app.cirkitdesigner.com/project/9fb7ac80-d92a-4b6f-9c52-4ed689a9e750?view=interactive_preview" 
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                title="Talaria Circuit Diagram"
+              />
+            </div>
+            <p style={{ marginTop: '16px', fontSize: '14px', color: '#64748b' }}>
+              Edit this project interactively in{' '}
+              <a 
+                href="https://app.cirkitdesigner.com/project/9fb7ac80-d92a-4b6f-9c52-4ed689a9e750" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-700 underline"
+              >
+                Cirkit Designer
+              </a>
+              .
+            </p>
+          </CardContent>
+        </FeatureCard>
+
         {/* Hardware Section */}
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Hardware Components</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* ESP32-S3 Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -234,7 +263,7 @@ export default function AboutPage() {
             </div>
 
             {/* MAX30102 Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -277,7 +306,7 @@ export default function AboutPage() {
             </div>
 
             {/* MPU6050 Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -318,6 +347,92 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
+
+            {/* TP4056 Charging Module Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-purple-50 to-slate-50 overflow-hidden">
+                <Image
+                  src="/images/Hardware/TP4056.png"
+                  alt="TP4056 USB Type-C Charging Module"
+                  fill
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">TP4056 Charging Module</h3>
+                  <span className="inline-block bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">Power Management</span>
+                </div>
+                <p className="text-slate-600 text-sm mb-4">
+                  USB Type-C charging module with integrated protection circuits for safe and efficient LiPo battery charging.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>USB Type-C input</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Overcharge protection</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>LED charge indicators</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3.7V LiPo Battery Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
+              {/* Corner Decorators */}
+              <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10"></span>
+              <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10"></span>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-amber-50 to-slate-50 overflow-hidden">
+                <Image
+                  src="/images/Hardware/LiPo Battery.jpg"
+                  alt="3.7V 300mAh LiPo Battery"
+                  fill
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">LiPo Battery</h3>
+                  <span className="inline-block bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded">Power Source</span>
+                </div>
+                <p className="text-slate-600 text-sm mb-4">
+                  Compact rechargeable lithium polymer battery providing portable power for extended operation time.
+                </p>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>300mAh capacity</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Lightweight & compact</span>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>Rechargeable via TP4056</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -326,7 +441,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Software Stack</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Firebase Realtime Database Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -368,8 +483,8 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Firebase ML Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
+            {/* Google Cloud Platform Card */}
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -379,8 +494,8 @@ export default function AboutPage() {
               {/* Image */}
               <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-purple-50 to-slate-50 overflow-hidden">
                 <Image
-                  src="/images/software/Firebase ML.jpg"
-                  alt="Firebase ML Integration"
+                  src="/images/software/Google Cloud.jpg"
+                  alt="Google Cloud Platform"
                   fill
                   className="object-contain transition-transform duration-500 group-hover:scale-110"
                 />
@@ -388,31 +503,31 @@ export default function AboutPage() {
               
               <div className="p-6">
                 <div className="mb-4">
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Firebase ML Integration</h3>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">Google Cloud Platform</h3>
                   <span className="inline-block bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">Machine Learning</span>
                 </div>
                 <p className="text-slate-600 text-sm mb-4">
-                  Machine learning platform for advanced gait pattern analysis and predictive health insights.
+                  LSTM model hosted in Artifact Registry and deployed via Vertex AI for scalable time-series predictions.
                 </p>
                 <div className="space-y-2 text-sm text-slate-600">
                   <div className="flex items-start">
                     <span className="mr-2">•</span>
-                    <span>Custom ML models</span>
+                    <span>Artifact Registry storage</span>
                   </div>
                   <div className="flex items-start">
                     <span className="mr-2">•</span>
-                    <span>Pattern recognition</span>
+                    <span>Vertex AI deployment</span>
                   </div>
                   <div className="flex items-start">
                     <span className="mr-2">•</span>
-                    <span>Predictive analytics</span>
+                    <span>Cloud-based inference</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Next.js & React Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>
@@ -455,7 +570,7 @@ export default function AboutPage() {
             </div>
 
             {/* GitHub Card */}
-            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden">
+            <div className="group relative rounded-md border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white">
               {/* Corner Decorators */}
               <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10"></span>
               <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10"></span>

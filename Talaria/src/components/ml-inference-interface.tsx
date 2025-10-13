@@ -270,7 +270,7 @@ export function MLInferenceInterface() {
               value={inputData}
               onChange={(e) => setInputData(e.target.value)}
               placeholder={`Enter data in CSV format:\n0.1, 0.2, 0.3, ... (15 values)\n0.2, 0.3, 0.4, ... (15 values)\n... (50 rows total)\n\nOr JSON format:\n[[0.1, 0.2, ...], [0.2, 0.3, ...], ...]`}
-              className="w-full h-48 p-3 border rounded-md font-mono text-sm"
+              className="w-full h-48 p-3 border  font-mono text-sm"
               disabled={modelStatus !== 'loaded'}
             />
           </div>
@@ -372,7 +372,7 @@ export function MLInferenceInterface() {
                 {predictionResult.prediction.map((prob, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <span className="text-sm w-20">Class {idx}:</span>
-                    <div className="flex-1 h-6 bg-slate-200 rounded-full overflow-hidden">
+                    <div className="flex-1 h-6 bg-slate-200  overflow-hidden">
                       <div 
                         className="h-full bg-blue-600 transition-all duration-300"
                         style={{ width: `${prob * 100}%` }}
@@ -391,3 +391,4 @@ export function MLInferenceInterface() {
     </div>
   );
 }
+

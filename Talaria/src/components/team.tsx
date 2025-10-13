@@ -40,7 +40,7 @@ export default function TeamSection() {
                     {members.map((member, index) => (
                         <div key={index} className="group overflow-hidden">
                             <Image 
-                                className="h-[50rem] w-full rounded-md object-cover object-top grayscale transition-all duration-500 hover:grayscale-0 group-hover:h-[53rem] group-hover:rounded-xl" 
+                                className="h-[50rem] w-full  object-cover object-top grayscale transition-all duration-500 hover:grayscale-0 group-hover:h-[53rem] group-hover:" 
                                 src={member.avatar} 
                                 alt={`${member.name} - ${member.role}`} 
                                 width={826} 

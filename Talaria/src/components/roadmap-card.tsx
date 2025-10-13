@@ -44,13 +44,13 @@ export function RoadmapCard({
                 {/* Timeline Dot */}
                 <motion.div
                   whileHover={{ scale: 1.2 }}
-                  className={`absolute left-1/2 top-2 -translate-x-1/2 h-4 w-4 rounded-full flex items-center justify-center ${
+                  className={`absolute left-1/2 top-2 -translate-x-1/2 h-4 w-4  flex items-center justify-center ${
                     item.status === "done" || item.status === "in-progress"
                       ? "bg-primary"
                       : "bg-muted"
                   }`}
                 >
-                  <div className="h-1.5 w-1.5 rounded-full bg-background" />
+                  <div className="h-1.5 w-1.5  bg-background" />
                 </motion.div>
 
                 {/* Quarter */}
@@ -78,3 +78,4 @@ export function RoadmapCard({
     </Card>
   );
 }
+

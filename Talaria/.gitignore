@@ -35,3 +35,30 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Service account keys (keep secure!)
+service-account-key.json
+*service-account*.json
+
+# Test files
+test_*.csv
+test_*.json
+*.test.csv
+
+# PowerShell scripts (development only)
+*.ps1
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.DS_Store

@@ -103,7 +103,7 @@ export function MinimalFooter() {
 							{socialLinks.map((item, i) => (
 								<a
 									key={i}
-									className="hover:bg-accent rounded-md border p-1.5 transition-colors duration-200"
+									className="hover:bg-accent  border p-1.5 transition-colors duration-200"
 									target="_blank"
 									rel="noopener noreferrer"
 									href={item.link}
@@ -160,3 +160,4 @@ export function MinimalFooter() {
 		</footer>
 	);
 }
+
