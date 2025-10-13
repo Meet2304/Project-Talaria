@@ -82,7 +82,7 @@ const toastAnimation = {
 };
 
 const Toaster = forwardRef<ToasterRef, { defaultPosition?: Position }>(
-  ({ defaultPosition = 'bottom-right' }, ref) => {
+  function ToasterComponent({ defaultPosition = 'bottom-right' }, ref) {
     const toastReference = useRef<ReturnType<typeof sonnerToast.custom> | null>(null);
 
     useImperativeHandle(ref, () => ({

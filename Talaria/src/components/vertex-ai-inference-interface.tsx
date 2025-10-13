@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Brain, Upload, Play, Download, Loader2, CheckCircle2, AlertCircle, Cloud, Database as DatabaseIcon, Calendar, Clock, Info, TrendingUp, Shuffle } from "lucide-react";
 import { LSTM_FEATURES, SAMPLES_REQUIRED, generateInputTemplate, parseInputData } from "@/lib/vertex-ai";
-import { getAvailableDevices, prepareModelInput, getDeviceDataStats, getDataRanges, fetchReadingsByRange, convertReadingsToModelInput } from "@/lib/firebase-ml-helper";
+import { getAvailableDevices, getDeviceDataStats, getDataRanges, fetchReadingsByRange, convertReadingsToModelInput } from "@/lib/firebase-ml-helper";
 import Toaster, { ToasterRef } from "@/components/toast";
 
 // Feature descriptions for predicted values
@@ -380,7 +380,7 @@ export function VertexAIInferenceInterface() {
                 What This Model Does
               </h3>
               <p className="text-sm text-blue-800 dark:text-blue-200">
-                This LSTM neural network analyzes <strong>50 consecutive timesteps</strong> of sensor data and predicts the <strong>next timestep's values</strong> for all 15 sensor features. It's a time-series forecasting model, not a classification model.
+                This LSTM neural network analyzes <strong>50 consecutive timesteps</strong> of sensor data and predicts the <strong>next timestep&apos;s values</strong> for all 15 sensor features. It&apos;s a time-series forecasting model, not a classification model.
               </p>
             </div>
             
@@ -418,7 +418,7 @@ export function VertexAIInferenceInterface() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Badge variant="outline" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 flex-shrink-0">3</Badge>
-                  <span>Click <strong>"Run Inference"</strong> to predict the next timestep</span>
+                  <span>Click <strong>&ldquo;Run Inference&rdquo;</strong> to predict the next timestep</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Badge variant="outline" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 flex-shrink-0">4</Badge>

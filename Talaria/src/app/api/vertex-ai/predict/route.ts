@@ -91,15 +91,9 @@ export async function POST(request: NextRequest) {
     const formattedInput = formatLSTMInput(samples);
     
     // Call Vertex AI
-    // Note: Vertex AI REST API accepts both project ID and project number
-    // Using project ID: project-talaria-474215
-    const apiEndpoint = process.env.VERTEX_AI_API_ENDPOINT || 'https://aiplatform.googleapis.com';
-    
-    // Try with regional endpoint first (more reliable)
+    // Try with regional endpoint (more reliable)
     const regionalEndpoint = `https://${location}-aiplatform.googleapis.com`;
     const url = `${regionalEndpoint}/v1/projects/${projectId}/locations/${location}/endpoints/${endpointId}:predict`;
-    
-    console.log('🌐 Calling Vertex AI endpoint:', url);
     
     const response = await fetch(url, {
       method: 'POST',
@@ -177,26 +171,18 @@ async function getGoogleCloudAccessToken(): Promise<string | null> {
     const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_JSON;
     
     if (serviceAccountJson) {
-      console.log('🔑 Using service account from environment variable');
-      console.log('📝 Service account JSON length:', serviceAccountJson.length);
-      console.log('📝 First 50 chars:', serviceAccountJson.substring(0, 50));
       
       // Remove surrounding quotes if present
       let jsonString = serviceAccountJson.trim();
       if ((jsonString.startsWith("'") && jsonString.endsWith("'")) || 
           (jsonString.startsWith('"') && jsonString.endsWith('"'))) {
         jsonString = jsonString.slice(1, -1);
-        console.log('✂️ Removed surrounding quotes');
       }
       
       // Replace escaped newlines (\\n) with actual newlines (\n) for private key
       jsonString = jsonString.replace(/\\\\n/g, '\\n');
       
       const credentials = JSON.parse(jsonString);
-      console.log('✅ Successfully parsed service account credentials');
-      console.log('📧 Service account email:', credentials.client_email);
-      console.log('🔑 Private key starts with:', credentials.private_key.substring(0, 50));
-      console.log('🔑 Private key length:', credentials.private_key.length);
       
       // Use JWT constructor directly (recommended by Google)
       const jwtClient = new JWT({
@@ -212,12 +198,10 @@ async function getGoogleCloudAccessToken(): Promise<string | null> {
         return null;
       }
       
-      console.log('✅ Successfully obtained access token');
       return accessToken.token || null;
     }
 
     // Option 2: Use Application Default Credentials (gcloud)
-    console.log('🔑 Attempting to use Application Default Credentials');
     const auth = new GoogleAuth({
       scopes: ['https://www.googleapis.com/auth/cloud-platform'],
     });

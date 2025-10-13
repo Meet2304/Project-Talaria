@@ -465,7 +465,7 @@ export default function AboutPage() {
               {/* Image */}
               <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-purple-50 to-slate-50 overflow-hidden">
                 <Image
-                  src="/images/software/GCP.jpg"
+                  src="/images/software/Google Cloud.jpg"
                   alt="Google Cloud Platform"
                   fill
                   className="object-contain transition-transform duration-500 group-hover:scale-110"

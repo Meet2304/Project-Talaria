@@ -218,15 +218,12 @@ export function parseInputData(input: string): number[][] {
         // If first value is not a number, it's likely a header
         if (isNaN(parseFloat(firstLine[0].trim()))) {
           startIndex = 1; // Skip header row
-          console.log('📝 Detected CSV header, skipping first row');
         }
       }
       
       const samples: number[][] = lines.slice(startIndex).map(line => 
         line.split(',').map(val => parseFloat(val.trim()))
       );
-      
-      console.log(`📊 Parsed ${samples.length} samples from CSV`);
       
       // Store for error message before validation
       const sampleCount = samples.length;
