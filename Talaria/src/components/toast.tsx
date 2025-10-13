@@ -44,7 +44,7 @@ interface ToasterProps {
 }
 
 export interface ToasterRef {
-  show: (props: ToasterProps) => void;
+  show: (_toasterProps: ToasterProps) => void;
 }
 
 const variantStyles: Record<Variant, string> = {
