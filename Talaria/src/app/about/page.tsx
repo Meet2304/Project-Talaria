@@ -186,6 +186,35 @@ export default function AboutPage() {
           </CardContent>
         </FeatureCard>
 
+        {/* Interactive Circuit Diagram */}
+        <FeatureCard className="mb-12">
+          <CardContent className="p-8 md:p-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Interactive Circuit Diagram</h2>
+            <p className="text-slate-600 mb-6">
+              Explore the complete circuit design for the Talaria system. This interactive diagram shows how all components are connected together.
+            </p>
+            <div style={{ position: 'relative', width: '100%', paddingTop: 'calc(max(56.25%, 400px))' }}>
+              <iframe 
+                src="https://app.cirkitdesigner.com/project/9fb7ac80-d92a-4b6f-9c52-4ed689a9e750?view=interactive_preview" 
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                title="Talaria Circuit Diagram"
+              />
+            </div>
+            <p style={{ marginTop: '16px', fontSize: '14px', color: '#64748b' }}>
+              Edit this project interactively in{' '}
+              <a 
+                href="https://app.cirkitdesigner.com/project/9fb7ac80-d92a-4b6f-9c52-4ed689a9e750" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-700 underline"
+              >
+                Cirkit Designer
+              </a>
+              .
+            </p>
+          </CardContent>
+        </FeatureCard>
+
         {/* Hardware Section */}
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Hardware Components</h2>
