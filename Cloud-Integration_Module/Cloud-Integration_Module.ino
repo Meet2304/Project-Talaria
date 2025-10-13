@@ -16,11 +16,11 @@
 #include "heartRate.h"
 
 // ----------------------- CONFIG -----------------------
-const char* WIFI_SSID = "Meet";
-const char* WIFI_PASS = "Tobham@230604";
+const char* WIFI_SSID = "WIFI_SSD";
+const char* WIFI_PASS = "WIFI_PASSWORD";
 
-const char* FIREBASE_API_KEY = "AIzaSyDSAMqM8KXJD9bMVV7wNuHGUgq5KZCfEY0";
-const char* FIREBASE_PROJECT_ID = "project-talaria-1d870";
+const char* FIREBASE_API_KEY = "FIREBASE_API_KEY";
+const char* FIREBASE_PROJECT_ID = "FIREBASE_PROJET_ID";
 
 // ----------------------- Derived -----------------------
 String FIREBASE_DB_BASE;
