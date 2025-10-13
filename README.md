@@ -168,4 +168,5 @@ When updating documentation:
 **Questions?** Open an issue on GitHub or contact the development team.
 
 **Last Updated:** October 2025
+  
 **Made on Earth, by Humans**
