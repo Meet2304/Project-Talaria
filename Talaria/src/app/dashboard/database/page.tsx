@@ -195,7 +195,7 @@ export default function DatabasePage() {
                         <div className="flex items-center justify-between text-sm">
                           <div className="flex items-center gap-2">
                             <Badge variant="outline" className="bg-green-500/10">
-                              <span className="h-2 w-2 rounded-full bg-green-500 mr-2 animate-pulse" />
+                              <span className="h-2 w-2  bg-green-500 mr-2 animate-pulse" />
                               Live Connection
                             </Badge>
                             <span className="text-muted-foreground">
@@ -235,3 +235,4 @@ export default function DatabasePage() {
     </div>
   )
 }
+

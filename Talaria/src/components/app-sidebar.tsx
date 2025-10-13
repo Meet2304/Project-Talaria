@@ -57,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="/dashboard" className="flex items-center gap-1 bg-slate-900 hover:bg-slate-800 rounded-md px-3 py-2">
+              <a href="/dashboard" className="flex items-center gap-1 bg-slate-900 hover:bg-slate-800  px-3 py-2">
                 <div className="relative w-14 h-14">
                   <Image 
                     src="/images/Assets/Talaria_Logo_TR.png" 
@@ -79,3 +79,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
+

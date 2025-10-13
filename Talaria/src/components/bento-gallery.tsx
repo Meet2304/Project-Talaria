@@ -224,7 +224,7 @@ const ImageModal = ({
             alt={item.title}
             width={1200}
             height={900}
-            className="h-auto max-h-[70vh] sm:max-h-[80vh] md:max-h-[90vh] w-full object-contain rounded-lg"
+            className="h-auto max-h-[70vh] sm:max-h-[80vh] md:max-h-[90vh] w-full object-contain "
           />
         </div>
         <div className="mt-3 sm:mt-4 text-center px-2">
@@ -371,3 +371,4 @@ const InteractiveImageBentoGallery: React.FC<
 }
 
 export default InteractiveImageBentoGallery
+

@@ -166,12 +166,12 @@ interface CircularUIProps {
 
 const CircularUI = ({ label, circles, className }: CircularUIProps) => (
     <div className={className}>
-        <div className="bg-gradient-to-b from-border size-fit rounded-2xl to-transparent p-px">
-            <div className="bg-gradient-to-b from-background to-muted/25 relative flex aspect-square w-fit items-center -space-x-4 rounded-[15px] p-4">
+        <div className="bg-gradient-to-b from-border size-fit  to-transparent p-px">
+            <div className="bg-gradient-to-b from-background to-muted/25 relative flex aspect-square w-fit items-center -space-x-4  p-4">
                 {circles.map((circle, i) => (
                     <div
                         key={i}
-                        className={cn('size-7 rounded-full border sm:size-8', {
+                        className={cn('size-7  border sm:size-8', {
                             'border-primary': circle.pattern === 'none',
                             'border-primary bg-[repeating-linear-gradient(-45deg,hsl(var(--border)),hsl(var(--border))_1px,transparent_1px,transparent_4px)]': circle.pattern === 'border',
                             'border-primary bg-background bg-[repeating-linear-gradient(-45deg,hsl(var(--primary)),hsl(var(--primary))_1px,transparent_1px,transparent_4px)]': circle.pattern === 'primary',
@@ -183,3 +183,4 @@ const CircularUI = ({ label, circles, className }: CircularUIProps) => (
         <span className="text-muted-foreground mt-1.5 block text-center text-sm">{label}</span>
     </div>
 )
+

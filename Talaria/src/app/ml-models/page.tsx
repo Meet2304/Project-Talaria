@@ -106,20 +106,24 @@ export default function MLModelsPage() {
                 {/* Metrics Grid */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   <div className="bg-slate-50 p-3 border-l-2 border-slate-900">
-                    <div className="text-xs text-slate-500 mb-1">Accuracy</div>
+                    <div className="text-xs text-slate-500 mb-1">R² Score</div>
                     <div className="text-lg font-bold text-slate-900">{formatMetric(model.metrics.accuracy)}</div>
-                  </div>
-                  <div className="bg-slate-50 p-3 border-l-2 border-blue-500">
-                    <div className="text-xs text-slate-500 mb-1">Precision</div>
-                    <div className="text-lg font-bold text-slate-900">{formatMetric(model.metrics.precision)}</div>
+                    <div className="text-xs text-slate-600 mt-0.5">Model accuracy</div>
                   </div>
                   <div className="bg-slate-50 p-3 border-l-2 border-green-500">
-                    <div className="text-xs text-slate-500 mb-1">Recall</div>
-                    <div className="text-lg font-bold text-slate-900">{formatMetric(model.metrics.recall)}</div>
+                    <div className="text-xs text-slate-500 mb-1">MAE</div>
+                    <div className="text-lg font-bold text-slate-900">0.103</div>
+                    <div className="text-xs text-slate-600 mt-0.5">Mean Absolute Error</div>
                   </div>
                   <div className="bg-slate-50 p-3 border-l-2 border-purple-500">
-                    <div className="text-xs text-slate-500 mb-1">F1 Score</div>
-                    <div className="text-lg font-bold text-slate-900">{formatMetric(model.metrics.f1Score)}</div>
+                    <div className="text-xs text-slate-500 mb-1">RMSE</div>
+                    <div className="text-lg font-bold text-slate-900">0.174</div>
+                    <div className="text-xs text-slate-600 mt-0.5">Root Mean Square Error</div>
+                  </div>
+                  <div className="bg-slate-50 p-3 border-l-2 border-blue-500">
+                    <div className="text-xs text-slate-500 mb-1">Model Type</div>
+                    <div className="text-sm font-bold text-slate-900">Regression</div>
+                    <div className="text-xs text-slate-600 mt-0.5">Time-series forecasting</div>
                   </div>
                 </div>
 

@@ -53,7 +53,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   const hasFooter = writer || publishedAt;
 
   return (
-    <Card className="flex w-full max-w-sm flex-col gap-3 overflow-hidden rounded-3xl border p-3 shadow-lg">
+    <Card className="flex w-full max-w-sm flex-col gap-3 overflow-hidden  border p-3 shadow-lg">
       {cover && (
         <CardHeader className="p-0">
           <div className="relative h-56 w-full">
@@ -61,7 +61,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
               src={cover}
               alt={headline}
               fill
-              className="rounded-2xl object-cover"
+              className=" object-cover"
             />
           </div>
         </CardHeader>
@@ -71,7 +71,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         {hasMeta && (
           <div className="mb-4 flex items-center text-sm text-muted-foreground">
             {tag && (
-            <Badge className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground hover:text-black">
+            <Badge className=" bg-muted px-3 py-1 text-sm text-muted-foreground hover:text-black">
               {tag}
             </Badge>
 
@@ -119,3 +119,4 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
     </Card>
   );
 };
+

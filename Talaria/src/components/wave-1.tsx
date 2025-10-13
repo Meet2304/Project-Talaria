@@ -40,3 +40,4 @@ export const WaveBackground = () => {
     </div>
   );
 };
+

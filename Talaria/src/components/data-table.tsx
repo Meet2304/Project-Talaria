@@ -432,7 +432,7 @@ export function DataTable({
             Past Performance{" "}
             <Badge
               variant="secondary"
-              className="flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground/30"
+              className="flex h-5 w-5 items-center justify-center  bg-muted-foreground/30"
             >
               3
             </Badge>
@@ -441,7 +441,7 @@ export function DataTable({
             Key Personnel{" "}
             <Badge
               variant="secondary"
-              className="flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground/30"
+              className="flex h-5 w-5 items-center justify-center  bg-muted-foreground/30"
             >
               2
             </Badge>
@@ -492,7 +492,7 @@ export function DataTable({
         value="outline"
         className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
       >
-        <div className="overflow-hidden rounded-lg border">
+        <div className="overflow-hidden  border">
           <DndContext
             collisionDetection={closestCenter}
             modifiers={[restrictToVerticalAxis]}
@@ -625,16 +625,16 @@ export function DataTable({
         value="past-performance"
         className="flex flex-col px-4 lg:px-6"
       >
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
+        <div className="aspect-video w-full flex-1  border border-dashed"></div>
       </TabsContent>
       <TabsContent value="key-personnel" className="flex flex-col px-4 lg:px-6">
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
+        <div className="aspect-video w-full flex-1  border border-dashed"></div>
       </TabsContent>
       <TabsContent
         value="focus-documents"
         className="flex flex-col px-4 lg:px-6"
       >
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
+        <div className="aspect-video w-full flex-1  border border-dashed"></div>
       </TabsContent>
     </Tabs>
   )
@@ -820,3 +820,4 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
     </Sheet>
   )
 }
+

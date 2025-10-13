@@ -119,13 +119,13 @@ export function FirebaseDebug() {
         </div>
 
         {error && (
-          <div className="bg-red-50 border-2 border-red-500 rounded p-4">
+          <div className="bg-red-50 border-2 border-red-500 p-4">
             <h3 className="font-semibold mb-2 text-red-600 text-lg">❌ Error:</h3>
             <pre className="text-sm overflow-auto text-red-800 whitespace-pre-wrap">{error}</pre>
           </div>
         )}
 
-        <div className="bg-slate-50 rounded p-4">
+        <div className="bg-slate-50 p-4">
           <h3 className="font-semibold mb-2">Environment Variables:</h3>
           <ul className="text-sm space-y-1 font-mono">
             <li className={configStatus.apiKey ? "text-green-600" : "text-red-600"}>
@@ -144,7 +144,7 @@ export function FirebaseDebug() {
         </div>
 
         {paths.length > 0 && (
-          <div className="bg-green-50 border-2 border-green-500 rounded p-4">
+          <div className="bg-green-50 border-2 border-green-500 p-4">
             <h3 className="font-semibold mb-2 text-green-700 text-lg">✓ Available Paths in Database:</h3>
             <ul className="list-disc list-inside space-y-1">
               {paths.map((path) => (
@@ -155,15 +155,15 @@ export function FirebaseDebug() {
         )}
 
         {rawData && (
-          <div className="bg-slate-50 rounded p-4">
+          <div className="bg-slate-50 p-4">
             <h3 className="font-semibold mb-2">Raw Database Data:</h3>
-            <pre className="text-xs overflow-auto max-h-96 bg-white p-4 rounded border">
+            <pre className="text-xs overflow-auto max-h-96 bg-white p-4 border">
               {JSON.stringify(rawData, null, 2)}
             </pre>
           </div>
         )}
 
-        <div className="bg-yellow-50 border-2 border-yellow-500 rounded p-4">
+        <div className="bg-yellow-50 border-2 border-yellow-500 p-4">
           <h3 className="font-semibold mb-2 text-yellow-800">📋 Instructions:</h3>
           <ol className="text-sm space-y-2 list-decimal list-inside">
             <li>Open browser console (F12) to see detailed logs</li>
@@ -176,3 +176,4 @@ export function FirebaseDebug() {
     </Card>
   );
 }
+

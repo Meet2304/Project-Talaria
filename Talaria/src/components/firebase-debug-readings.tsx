@@ -43,11 +43,11 @@ export function FirebaseDebugReadings() {
   }, []);
 
   return (
-    <div className="fixed bottom-4 right-4 bg-white p-4 border rounded shadow-lg max-w-2xl z-50 max-h-[80vh] overflow-auto">
+    <div className="fixed bottom-4 right-4 bg-white p-4 border shadow-lg max-w-2xl z-50 max-h-[80vh] overflow-auto">
       <h3 className="font-bold mb-2">Firebase Debug - Data Structure Analysis</h3>
       <p className="mb-2"><strong>Total readings:</strong> {count}</p>
       
-      <div className="mb-4 p-2 bg-blue-50 border border-blue-200 rounded">
+      <div className="mb-4 p-2 bg-blue-50 border border-blue-200">
         <h4 className="font-semibold mb-1">Structure Check:</h4>
         {sampleReading && (
           <div className="text-xs">
@@ -60,9 +60,10 @@ export function FirebaseDebugReadings() {
       </div>
       
       <h4 className="font-semibold mb-1">Sample Reading:</h4>
-      <pre className="text-xs overflow-auto bg-gray-50 p-2 rounded">
+      <pre className="text-xs overflow-auto bg-gray-50 p-2">
         {JSON.stringify(rawData, null, 2)}
       </pre>
     </div>
   );
 }
+

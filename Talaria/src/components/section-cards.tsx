@@ -38,7 +38,7 @@ export function SectionCards() {
               {loading ? "..." : `${stats?.avgHeartRate || 0}`}
             </CardTitle>
             <div className="absolute right-4 top-4">
-              <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
+              <Badge variant="outline" className="flex gap-1  text-xs">
                 {(stats?.heartRateTrend || 0) >= 0 ? (
                   <TrendingUpIcon className="size-3" />
                 ) : (
@@ -66,7 +66,7 @@ export function SectionCards() {
               {loading ? "..." : `${stats?.avgSpo2 || 0}`}
             </CardTitle>
             <div className="absolute right-4 top-4">
-              <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
+              <Badge variant="outline" className="flex gap-1  text-xs">
                 {(stats?.spo2Trend || 0) >= 0 ? (
                   <TrendingUpIcon className="size-3" />
                 ) : (
@@ -94,7 +94,7 @@ export function SectionCards() {
               {loading ? "..." : (stats?.totalSteps || 0).toLocaleString()}
             </CardTitle>
             <div className="absolute right-4 top-4">
-              <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
+              <Badge variant="outline" className="flex gap-1  text-xs">
                 {(stats?.stepsTrend || 0) >= 0 ? (
                   <TrendingUpIcon className="size-3" />
                 ) : (
@@ -122,7 +122,7 @@ export function SectionCards() {
               {loading ? "..." : `${stats?.activeDuration || 0}`}
             </CardTitle>
             <div className="absolute right-4 top-4">
-              <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
+              <Badge variant="outline" className="flex gap-1  text-xs">
                 <Activity className="size-3" />
                 Live
               </Badge>
@@ -138,3 +138,4 @@ export function SectionCards() {
     </div>
   )
 }
+

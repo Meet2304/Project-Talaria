@@ -52,30 +52,30 @@ export interface MLModel {
  */
 export const ML_MODELS: MLModel[] = [
   {
-    id: "lstm-gait-cardiovascular-analyzer",
-    name: "LSTM Gait & Cardiovascular Analyzer",
+    id: "lstm-time-series-forecaster",
+    name: "LSTM Time-Series Forecaster",
     icon: Activity,
-    type: "LSTM Neural Network",
-    objective: "Analyzes combined sensor data from accelerometer, gyroscope, and cardiovascular sensors to provide comprehensive health insights using temporal pattern recognition.",
+    type: "LSTM Neural Network (Regression)",
+    objective: "Predicts the next timestep's sensor values (15 features) based on 50 consecutive previous timesteps. Forecasts future readings for accelerometer, gyroscope, heart rate, and SpO2 sensors using temporal pattern analysis.",
     status: "connected",
     
     metrics: {
-      accuracy: 0.92,
-      precision: 0.89,
-      recall: 0.91,
-      f1Score: 0.90,
+      accuracy: 0.9699, // R² Score: 96.99%
+      precision: null, // Not applicable for regression
+      recall: null, // Not applicable for regression
+      f1Score: null, // Not applicable for regression
     },
     
     useCases: [
-      "Multi-modal health pattern recognition",
-      "Real-time gait and cardiovascular analysis",
-      "Activity classification with health metrics",
-      "Anomaly detection in sensor fusion data",
+      "Predict future sensor readings based on historical data",
+      "Time-series forecasting for health monitoring",
+      "Anomaly detection through prediction deviation",
+      "Real-time trend analysis and extrapolation",
     ],
     
     dataset: {
       samples: 50000,
-      description: "50-sample sequences of 15 features: AccX, AccY, AccZ, GyroX, GyroY, GyroZ, Aroll, Apitch, Groll, Gpitch, Gy, Combroll, Combpitch, Heart Rate, and SpO2",
+      description: "50-timestep sequences predicting next values for 15 features: HR, SpO2, AccX, AccY, AccZ, GyroX, GyroY, GyroZ, Aroll, Apitch, Groll, Gpitch, Gy, Combroll, Combpitch",
     },
     
     githubUrl: "https://github.com/Meet2304/Project-Talaria",
