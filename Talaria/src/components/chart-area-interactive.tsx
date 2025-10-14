@@ -153,7 +153,7 @@ export function ChartAreaInteractive() {
         {loading ? (
           <div className="flex h-[250px] items-center justify-center text-muted-foreground">Loading chart data...</div>
         ) : chartData.length === 0 ? (
-          <div className="flex h-[250px] items-center justify-center text-muted-foreground">No sensor data available. Check Firebase connection.</div>
+          <div className="flex h-[250px] items-center justify-center text-muted-foreground">No sensor data available in the selected time range. Check Firebase connection.</div>
         ) : (
           <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
             <AreaChart data={chartData}>
